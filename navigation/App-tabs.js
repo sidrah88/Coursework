@@ -38,7 +38,7 @@ class App extends Component {
         >
           <Tab.Screen name="Home" component={HomeScreen} />
           <Tab.Screen name="Login" component={LoginScreen} />
-          <Tab.Screen name="ceate acount" component={CreateAccountScreen} />
+          <Tab.Screen name="Create Account" component={CreateAccountScreen} />
 
         </Tab.Navigator>
       </NavigationContainer>

@@ -50,7 +50,7 @@ class Login extends Component {
     .then(async (responseJson) => {
             console.log(responseJson);
             await AsyncStorage.setItem('@session_token', responseJson.token);
-            this.props.navigation.navigate("Home");
+            this.props.navigation.navigate("Profile");
     })
     .catch((error) => {
         console.log(error);
@@ -92,6 +92,7 @@ class Login extends Component {
                 <Button 
                     title="Login"
                     onPress={() => this.login()}
+                    
                 />
                 <Button
                     title="Create Account"
