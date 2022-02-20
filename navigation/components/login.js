@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
-import { Text, TextInput, View, Button, StyleSheet, Alert } from 'react-native';
+import { Text, TextInput, View, Button, StyleSheet, Alert, Image } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { ScrollView } from 'react-native-gesture-handler';
 
 //import { SafeAreaView } from "react-native";
 //import 'bootstrap/dist/css/bootstrap.min.css';
 //import ButtonGroup from "react-bootstrap/ButtonGroup";
 //import { ScrollView } from 'react-native-gesture-handler';
 
+import image1 from './../assets/image1.png';
 
 class Login extends Component {
   constructor(props){
@@ -17,6 +19,7 @@ class Login extends Component {
       password: ''
     }
   }
+
 
   login = async () => {
 
@@ -76,6 +79,11 @@ class Login extends Component {
 
       //<ScrollView>
       <View style={styles.container}>
+                
+                <Image source={require('./../assets/image1.png')}
+                        style={{ width: 90, height: 90 }}
+                />
+
                 <TextInput
                     placeholder="Enter your email..."
                     onChangeText={(email) => this.setState({email})}
@@ -91,15 +99,17 @@ class Login extends Component {
                 />
                 <Button 
                     title="Login"
+                    color="grey"
                     onPress={() => this.login()}
                     
                 />
                 <Button
                     title="Create Account"
-                    color="darkblue"
+                    color="black"
                     onPress={() => this.props.navigation.navigate("CreateAccount")}
                 />
         </View>
+        //<ScrollView/>
     );
   }
 }
@@ -118,18 +128,11 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center", 
     justifyContent: "center",
-    width: 100,
+    width: 200,
     height: 100,
     alignSelf: "center",
     alignContent: "center"
   },
-
-
-  button:{
-    width: 1,
-    alignContent: 'center',
-    height: 200
-  }
 });
 
 

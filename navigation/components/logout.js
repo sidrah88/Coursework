@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, ScrollView, Button } from 'react-native';
+import { Text, ScrollView, Button, StyleSheet, View } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 class HomeScreen extends Component{
@@ -53,22 +53,40 @@ class HomeScreen extends Component{
             ToastAndroid.show(error, ToastAndroid.SHORT);
         })
     }
+    
 
     render(){
         return (
             <ScrollView>
+                <View style={styles.container}>
                 <Button
                     title="Log out"
+                    color="grey"
                     onPress={() => this.logout()}
                 />
                 <Button
                     title="Return to Home"
-                    color="darkblue"
+                    color="black"
                     onPress={() => this.props.navigation.navigate("Home")}
                 />
+                </View>
             </ScrollView>
         )
     }
 }
+
+const styles = StyleSheet.create({
+
+    container: {
+      flex: 1,
+      alignItems: "center", 
+      justifyContent: "center",
+      width: 200,
+      height: 100,
+      alignSelf: "center",
+      alignContent: "center"
+    },
+  });
+
 
 export default HomeScreen;

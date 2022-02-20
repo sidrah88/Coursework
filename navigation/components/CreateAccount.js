@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
-import { Text, TextInput, View, Button, StyleSheet, Alert } from 'react-native';
+import { Text, TextInput, View, Button, StyleSheet, Alert, Image } from 'react-native';
 //import { SafeAreaView } from "react-native";
 //import 'bootstrap/dist/css/bootstrap.min.css';
 //import ButtonGroup from "react-bootstrap/ButtonGroup";
+import image1 from './../assets/image1.png';
+
 
 class CreateAccount extends Component {
   constructor(props){
@@ -73,6 +75,11 @@ class CreateAccount extends Component {
         <TextInput style={styles.inputBox} placeholder='password...' onChangeText={this.handlePasswordInput} value={this.state.password} />
       </View> */
       <View style={styles.container}>
+
+                <Image source={require('./../assets/image1.png')}
+                        style={{ width: 90, height: 90 }}
+                />
+
                 <TextInput
                     placeholder="Enter your first name..."
                     onChangeText={(first_name) => this.setState({first_name})}
@@ -100,12 +107,12 @@ class CreateAccount extends Component {
                 />
                 <Button style={styles.button}
                     title="Create an account"
+                    color={"grey"}
                     onPress={() => this.signup()}
                 />
       </View>
     );
   }
-
 }
 
 const styles = StyleSheet.create({
@@ -120,7 +127,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center", 
     justifyContent: "center",
-    width: 100,
+    width: 200,
     height: 100,
     alignSelf: "center",
     alignContent: "center"
