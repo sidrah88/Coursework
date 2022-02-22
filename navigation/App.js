@@ -35,10 +35,9 @@ class App extends Component {
     return (
       <NavigationContainer>
         <Drawer.Navigator>
-          <Drawer.Screen name="Home" component={tabNavigation} />
           <Drawer.Screen name="Login" component={LoginScreen} />
+          <Drawer.Screen name="Home" component={tabNavigation} />
           <Drawer.Screen name ="Update Account" component={patch} />
-
           <Drawer.Screen name="Create Account" component={CreateAccountScreen} />
           <Drawer.Screen name="Log Out" component={LogoutScreen} />
         </Drawer.Navigator>
