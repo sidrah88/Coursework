@@ -51,9 +51,6 @@ class profileScreen extends Component {
                 <Text>My Profile!</Text>
                 <Text> {this.state.user.first_name}</Text>
                 <Text> {this.state.user.email}</Text>
-                <Text> {this.state.user.password}</Text>
-
-
             </View>
         );
     } 

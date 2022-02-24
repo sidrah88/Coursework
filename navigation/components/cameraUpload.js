@@ -52,36 +52,7 @@ class cameraUpload extends Component {
               await this.camera.takePictureAsync(options); 
           } 
       }
-    
-
-     /*  render(){
-        if(this.state.hasPermission){
-          return(
-            <View style={styles.container}>
-              <Camera style={styles.camera} type={this.state.type}>
-                <View style={styles.buttonContainer}>
-                  <TouchableOpacity
-                    style={styles.button}
-                    onPress={() => {
-                      let type = type === Camera.Constants.Type.back
-                      ? Camera.Constants.Type.front
-                      : Camera.Constants.Type.back;
-    
-                      this.setState({type: type});
-                    }}>
-                    <Text style={styles.text}> Flip </Text>
-                  </TouchableOpacity>
-                </View>
-              </Camera>
-            </View>
-          );
-        }else{
-          return(
-            <Text>No access to camera</Text>
-          );
-        }
-      } */
-
+      
       render(){
         if(this.state.hasPermission){
           return(

@@ -8,38 +8,7 @@ import photoScreen from './photoScreen';
 import friendScreen from './friendScreen';
 import cameraDisplay from './cameraDisplay';
 import cameraUpload from './cameraUpload';
-
-function FriendsScreen() {
-  return (
-    <View>
-      <SearchBar
-        placeholder="Type Here..."
-        style={{backgroundColor:"white", padding:1}}
-      />
-      <Button
-        title="Add Friends"
-        color="grey"
-      />
-    </View>
-  );
-}
-
-function FriendRequestsScreen() {
-  return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Friend Requests!</Text>
-      
-    </View>
-  );
-}
-
-function PostsScreen() {
-    return (
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <Text>My Posts!</Text>
-      </View>
-    );
-}
+import postsScreen from './postsScreen';
 
 const Tab = createBottomTabNavigator();
 
@@ -49,8 +18,7 @@ export default function App() {
         <Tab.Screen name="Profile" component={profileScreen} />
         <Tab.Screen name="Photo" component={cameraUpload} />
         <Tab.Screen name="Friends" component={friendScreen} />
-        <Tab.Screen name="FriendRequests" component={FriendRequestsScreen} />
-        <Tab.Screen name="Posts" component={PostsScreen} />
+        <Tab.Screen name="Posts" component={postsScreen} />
       </Tab.Navigator>
   );
 }

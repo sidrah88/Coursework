@@ -8,7 +8,7 @@ import CreateAccountScreen from './components/CreateAccount';
 import LogoutScreen from './components/logout';
 import tabNavigation from './components/tabNavigation';
 import patch from './components/patch';
-//import cameraUpload from './components/cameraUpload';
+import FriendRequests from './components/friendRequests';
 
 
 
@@ -39,6 +39,7 @@ class App extends Component {
           <Drawer.Screen name="Home" component={tabNavigation} />
           <Drawer.Screen name ="Update Account" component={patch} />
           <Drawer.Screen name="Create Account" component={CreateAccountScreen} />
+          <Drawer.Screen name="Friend Requests" component={FriendRequests} />
           <Drawer.Screen name="Log Out" component={LogoutScreen} />
         </Drawer.Navigator>
         {/* <Drawer.Navigator>
