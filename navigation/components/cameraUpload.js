@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { Camera } from "expo-camera";
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 
 class cameraUpload extends Component {
 
@@ -20,13 +22,16 @@ class cameraUpload extends Component {
 
       sendToServer = async (data) => {
         // Get these from AsyncStorage
-        let id = 10;
-        let token = "a3b0601e54775e60b01664b1a5273d54"
+        //let id = 10;
+        //let token = "a3b0601e54775e60b01664b1a5273d54"
+
+        const id_user = await AsyncStorage.getItem('@session_id');
+        const token = await AsyncStorage.getItem('@session_token');
   
         let res = await fetch(data.base64);
         let blob = await res.blob();
   
-        return fetch("http://localhost:3333/api/1.0.0/user/" + id + "/photo", {
+        return fetch("http://localhost:3333/api/1.0.0/user/" + id_user + "/photo", {
             method: "POST",
             headers: {
                 "Content-Type": "image/png",

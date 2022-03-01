@@ -58,6 +58,9 @@ class FriendRequests extends Component {
           method: 'post'
         })
         .then((response) => {
+            this.getFriendRequests();
+        })
+        .then((response) => {
             console.log("Friend request accepted")
         })
         .catch((error) => {
@@ -68,6 +71,9 @@ class FriendRequests extends Component {
     deleteRequest = (id) => {
         return fetch("http://localhost:3333/api/1.0.0/friendrequests" + id, {
           method: 'delete'
+        })
+        .then((response) => {
+            this.getFriendRequests();
         })
         .then((response) => {
             console.log("Freind request declined")

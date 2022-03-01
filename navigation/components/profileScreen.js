@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
-import { View, Text, Image, Style } from 'react-native';
+import { View, Text, Image, Style, StyleSheet } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import getPicture from './getPicture';
+
 
 class profileScreen extends Component {
     constructor(props){
@@ -47,13 +49,33 @@ class profileScreen extends Component {
 
     render(){
         return (
-            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+            <View style={styles.container}>
                 <Text>My Profile!</Text>
                 <Text> {this.state.user.first_name}</Text>
                 <Text> {this.state.user.email}</Text>
-            </View>
+            <Image
+              source={{
+                uri: this.state.photo,
+              }}
+              style={{
+                width: 400,
+                height: 400,
+                borderWidth: 5 
+              }}
+            />
+          </View>
         );
     } 
 }
 
 export default profileScreen;
+
+const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+      backgroundColor: '#fff',
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+  });
+
