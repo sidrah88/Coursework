@@ -9,8 +9,13 @@ class friendScreen extends Component {
     
         this.state = {
             userData: [],
-          id: '',
+            user_givenname: '',
+            id: '',
         };
+      }
+
+      componentDidMount(){
+        this.getMyFriends();
       }
 
     async addFriend() {
@@ -32,7 +37,7 @@ class friendScreen extends Component {
         })
       } 
 
-    async searchFriend() {
+     async searchFriend() {
 
         const token = await AsyncStorage.getItem('@session_token');
     
@@ -44,19 +49,35 @@ class friendScreen extends Component {
           },
         })
         .then((response) => {
-          console.log("Friend searched");
-        })
-        .catch((error) => {
+          if(response.status === 200){
+              console.log("search results")
+              console.log(response)
+              return response.json()
+         
+          }else if(response.status === 400){
+              throw 'Invalid request';
+          }else{
+              throw 'Something went wrong';
+      }
+      })
+      .then(response => {
+          this.setState({
+              userData: response,
+              user_givenname: response.user_givenname
+              
+          })
+      })
+      .catch((error) => {
           console.log(error);
-        })
-    }
+      });
+    } 
 
     async getMyFriends()
     {
         const id_user = await AsyncStorage.getItem('@session_id');
         const token = await AsyncStorage.getItem('@session_token');
 
-        return fetch("http://localhost:3333/api/1.0.0/user/", id_user , "friends", {
+        return fetch("http://localhost:3333/api/1.0.0/user/" + id_user + "/friends", {
             method: 'get',
             headers: {
                 "X-Authorization": token,
@@ -89,7 +110,7 @@ class friendScreen extends Component {
         return (
             <View>
                 <TextInput
-                    placeholder="Enter ID to add a friend..."
+                    placeholder="Enter name to add a friend..."
                     onChangeText={(id) => this.setState({id})}
                     style={{padding:5, borderWidth:1, margin:5}}
                 />
@@ -97,11 +118,6 @@ class friendScreen extends Component {
                     title="Add Friend"
                     color="grey"
                     onPress={() => this.addFriend()}
-                />
-                <TextInput
-                    placeholder="Enter ID to search for friends..."
-                    onChangeText={(id) => this.setState({id})}
-                    style={{padding:5, borderWidth:1, margin:5}}
                 />
                 <Button
                     title="Search Friends"
@@ -118,7 +134,7 @@ class friendScreen extends Component {
                     data={this.state.userData}
                     renderItem={({item}) => (
                     <View>
-                        <Text>{item.user_id}</Text>
+                        <Text>{item.user_givenname}</Text>
                         <Button
                             title="View Friend"
                             color="grey"
@@ -126,6 +142,8 @@ class friendScreen extends Component {
                         />
                     </View>
                 )}
+                keyExtractor={(item,index) => item.user_id.toString()}
+
               />
             </View>
         );

@@ -4,7 +4,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 
-export default class App extends Component{
+class GetPicture extends Component{
   constructor(props){
     super(props);
 
@@ -71,6 +71,9 @@ export default class App extends Component{
   }
   
 }
+
+export default GetPicture;
+
 
 const styles = StyleSheet.create({
   container: {

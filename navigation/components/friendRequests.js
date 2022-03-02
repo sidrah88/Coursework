@@ -53,9 +53,16 @@ class FriendRequests extends Component {
         });
     }
 
-    acceptRequest = (id) => {
+    async acceptRequest(id) {
+        
+        const token = await AsyncStorage.getItem('@session_token');
+
         return fetch("http://localhost:3333/api/1.0.0/friendrequests/" + id, {
-          method: 'post'
+            method: 'post',
+            headers: {
+                "X-Authorization": token,
+                'Content-Type': 'application/json'
+            },
         })
         .then((response) => {
             this.getFriendRequests();
@@ -68,9 +75,16 @@ class FriendRequests extends Component {
         })
     }
 
-    deleteRequest = (id) => {
-        return fetch("http://localhost:3333/api/1.0.0/friendrequests" + id, {
-          method: 'delete'
+    async deleteRequest(id) {
+        
+        const token = await AsyncStorage.getItem('@session_token');
+
+        return fetch("http://localhost:3333/api/1.0.0/friendrequests/" + id, {
+            method: 'delete',
+            headers: {
+                "X-Authorization": token,
+                'Content-Type': 'application/json'
+            },
         })
         .then((response) => {
             this.getFriendRequests();

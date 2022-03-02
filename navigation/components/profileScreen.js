@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, Image, Style, StyleSheet } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import getPicture from './getPicture';
+import GetPicture from './getPicture';
 
 
 class profileScreen extends Component {
@@ -53,16 +53,7 @@ class profileScreen extends Component {
                 <Text>My Profile!</Text>
                 <Text> {this.state.user.first_name}</Text>
                 <Text> {this.state.user.email}</Text>
-            <Image
-              source={{
-                uri: this.state.photo,
-              }}
-              style={{
-                width: 400,
-                height: 400,
-                borderWidth: 5 
-              }}
-            />
+            <GetPicture> </GetPicture>
           </View>
         );
     } 
