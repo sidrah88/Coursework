@@ -7,6 +7,7 @@ import HomeScreen from './components/home';
 import LoginScreen from './components/login';
 import CreateAccountScreen from './components/CreateAccount';
 import friendRequests from './components/friendRequests';
+import ViewPost from './components/ViewPost';
 
 
 const Tab = createBottomTabNavigator();
@@ -41,6 +42,9 @@ class App extends Component {
           <Tab.Screen name="Login" component={LoginScreen} />
           <Tab.Screen name="Create Account" component={CreateAccountScreen} />
           <Tab.Screen name="Friend Requests" component={friendRequests}/>
+          <Tab.Screen name="View Post" component={ViewPost}/>
+
+
 
         </Tab.Navigator>
       </NavigationContainer>

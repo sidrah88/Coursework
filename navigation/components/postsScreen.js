@@ -23,6 +23,10 @@ class postsScreen extends Component {
 
     async addPost() {
 
+        let addedPost = {text:this.state.text}
+
+        addedPost['text'];
+
         const id_user = await AsyncStorage.getItem('@session_id');
 
         const token = await AsyncStorage.getItem('@session_token');
@@ -33,9 +37,12 @@ class postsScreen extends Component {
             "X-Authorization": token,
             'Content-Type': 'application/json'
           },
+          body: JSON.stringify(addedPost)
+
         })
         .then((response) => {
           console.log("Post added");
+          this.getMyPosts();
         })
         .catch((error) => {
           console.log(error);
@@ -107,24 +114,29 @@ class postsScreen extends Component {
             <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
                 <TextInput
                     placeholder="Enter your post..."
-                    onChangeText={(post_id) => this.setState({post_id})}
+                    onChangeText={(text) => this.setState({text})}
                     style={{padding:5, borderWidth:1, margin:5}}
                 />
                 <Button
                     title="Add Post"
                     color="grey"
-                    onPress={() => this.addPost}
+                    onPress={() => this.addPost()}
                 />
                 <Text>My Posts</Text>
+
                 <FlatList
                     data={this.state.userData}
                     renderItem={({item}) => (
                     <View>
+                
+                
+
                         <Text>{item.text}</Text>
                         <Button
                             title="View Post"
                             color="grey"
-                            onPress={() => this.getMyPosts(item.post_id)}
+                            //onPress={() => this.getMyPosts(item.post_id)}
+                            onPress={() => this.props.navigation.navigate("View Post")}
                         />
                         <Button
                             title="Delete Post"
@@ -134,7 +146,6 @@ class postsScreen extends Component {
                     </View>
                 )}
                 keyExtractor={(item,index) => item.post_id.toString()}
-
               />
             </View>
         );

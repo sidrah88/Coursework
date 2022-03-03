@@ -7,6 +7,7 @@ import LoginScreen from './components/login';
 import CreateAccountScreen from './components/CreateAccount';
 import { ScreenStack } from 'react-native-screens';
 import friendRequests from './components/friendRequests';
+import ViewPost from './components/ViewPost';
 
 
 const Stack = createNativeStackNavigator();
@@ -20,6 +21,8 @@ class App extends Component {
           <Stack.Screen name="Login" component={LoginScreen} />
           <Stack.Screen name="Create Account" component={CreateAccountScreen} />
           <Stack.Screen name="Friend Requests" component={friendRequests}/>
+          <Stack.Screen name="View Post" component={ViewPost}/>
+
         </Stack.Navigator>
       </NavigationContainer>
     );
