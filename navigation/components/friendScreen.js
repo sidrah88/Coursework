@@ -10,6 +10,7 @@ class friendScreen extends Component {
         this.state = {
             userData: [],
             user_givenname: '',
+
             id: '',
         };
       }
@@ -135,10 +136,12 @@ class friendScreen extends Component {
                     renderItem={({item}) => (
                     <View>
                         <Text>{item.user_givenname}</Text>
+                        <Text>{item.user_id}</Text>
+
                         <Button
                             title="View Friend"
                             color="grey"
-                            onPress={() => this.getMyFriends(item.user_id)}
+                            onPress={() => this.props.navigation.navigate("View Friend",{friendId: item.user_id})}
                         />
                     </View>
                 )}

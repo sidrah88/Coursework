@@ -10,6 +10,7 @@ import tabNavigation from './components/tabNavigation';
 import patch from './components/patch';
 import FriendRequests from './components/friendRequests';
 import ViewPost from './components/ViewPost';
+import ViewFriend from './components/ViewFriend';
 
 
 
@@ -42,6 +43,8 @@ class App extends Component {
           <Drawer.Screen name="CreateAccount" component={CreateAccountScreen} />
           <Drawer.Screen name="Friend Requests" component={FriendRequests} />
           <Drawer.Screen name="View Post" component={ViewPost} />
+          <Drawer.Screen name="View Friend" component={ViewFriend} />
+
 
           <Drawer.Screen name="Log Out" component={LogoutScreen} />
         </Drawer.Navigator>

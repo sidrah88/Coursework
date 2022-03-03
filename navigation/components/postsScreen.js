@@ -136,13 +136,19 @@ class postsScreen extends Component {
                             title="View Post"
                             color="grey"
                             //onPress={() => this.getMyPosts(item.post_id)}
-                            onPress={() => this.props.navigation.navigate("View Post")}
+                            onPress={() => this.props.navigation.navigate("View Post",{postId: item.post_id})}
                         />
                         <Button
                             title="Delete Post"
                             color="black"
                             onPress={() => this.deletePost(item.post_id)}
                         />
+                        <Button
+                            title="Delete Post"
+                            color="black"
+                            onPress={() => this.deletePost(item.post_id)}
+                        />
+
                     </View>
                 )}
                 keyExtractor={(item,index) => item.post_id.toString()}
