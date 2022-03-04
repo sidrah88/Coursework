@@ -20,12 +20,18 @@ class ViewPost extends Component {
         this.getSinglePost();
     }
 
-    async getSinglePost(post_id)
+    componentDidUpdate(){
+        if (this.state.post_id !== this.props.route.params.postId) {
+        this.getSinglePost();
+        }
+     }
+
+    async getSinglePost()
       {
           const id_user = await AsyncStorage.getItem('@session_id');
           const token = await AsyncStorage.getItem('@session_token');
   
-          return fetch("http://localhost:3333/api/1.0.0/user/" + id_user + "/post/" + this.props.route.params.post_id, {
+          return fetch("http://localhost:3333/api/1.0.0/user/" + id_user + "/post/" + this.props.route.params.postId, {
               method: 'get',
               headers: {
                   "X-Authorization": token,
@@ -55,6 +61,7 @@ class ViewPost extends Component {
       }
 
     
+    //check the number of likes and dislikes of each post
 
     render(){
         return (

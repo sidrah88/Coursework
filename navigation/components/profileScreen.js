@@ -15,8 +15,8 @@ class profileScreen extends Component {
 
     componentDidMount(){
         this.getProfile();
-      }
-    
+    }
+
       async getProfile()
       {
         const id_user = await AsyncStorage.getItem('@session_id');

@@ -19,8 +19,15 @@ class ViewFriend extends Component {
 
     //get user information
     componentDidMount(){
-        this.getProfile();
+       this.getProfile();
+       this.getFriendPosts();
     }
+
+    componentDidUpdate(){
+        if (this.state.user_id !== this.props.route.params.friendId) {
+        this.getProfile();
+        }
+     }
 
     async getProfile()
       {
@@ -58,6 +65,40 @@ class ViewFriend extends Component {
         });
     }
 
+    async getFriendPosts()
+      {
+          const id_user = await AsyncStorage.getItem('@session_id');
+          const token = await AsyncStorage.getItem('@session_token');
+  
+          return fetch("http://localhost:3333/api/1.0.0/user/" + this.props.route.params.friendId + "/post", {
+              method: 'get',
+              headers: {
+                  "X-Authorization": token,
+                  'Content-Type': 'application/json'
+              },
+          })
+          .then((response) => {
+              if(response.status === 200){
+                  console.log("Friends posts found")
+                  return response.json()
+             
+              }else if(response.status === 400){
+                  throw 'Invalid request';
+              }else{
+                  throw 'Something went wrong';
+          }
+          })
+          .then(response => {
+              this.setState({
+                  userData: response,
+                  text: response.text
+              })
+          })
+          .catch((error) => {
+              console.log(error);
+          });
+      }
+
     //display your friends profile page:
         // name
         // picture
@@ -73,6 +114,24 @@ class ViewFriend extends Component {
                 <Text>Last Name: {this.state.last_name}</Text>  
                 <Text>Friend Count: {this.state.friend_count}</Text>  
 
+                <FlatList
+                    data={this.state.userData}
+                    renderItem={({item}) => (
+                    <View>
+                        <Text>{item.text}</Text>
+                        <Button
+                            title="Like Post"
+                            color="black"
+                            
+                        />
+                        <Button
+                            title="Dislike Post"
+                            color="black"
+                        />
+                    </View>
+                )}
+                keyExtractor={(item,index) => item.post_id.toString()}
+              />
 
                               
             </View>
