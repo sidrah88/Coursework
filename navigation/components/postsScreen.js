@@ -18,9 +18,9 @@ class postsScreen extends Component {
         };
       }
 
-      componentDidMount(){
+    componentDidMount(){
         this.getMyPosts();
-      }
+    }
 
     async addPost() {
 
@@ -55,6 +55,8 @@ class postsScreen extends Component {
         const id_user = await AsyncStorage.getItem('@session_id');
 
         const token = await AsyncStorage.getItem('@session_token');
+
+        console.log(post_id);
 
         return fetch("http://localhost:3333/api/1.0.0/user/" + id_user + "/post/" + post_id, {
             method: 'delete',
@@ -108,37 +110,39 @@ class postsScreen extends Component {
               console.log(error);
           });
       }
+      
+      async updatePost(post_id)  
+        {
+            let to_send = {};
 
-    async updatePost(post_id)
-    {
+            if (this.state.newText != this.state.text){
+            to_send['text'] = this.state.newText;
+            }
 
-    let to_send = {};
+            console.log(JSON.stringify(to_send));
+            console.log(post_id)
 
-    if (this.state.newText != this.state.text){
-      to_send['text'] = this.state.newText;
-    }
+            const id_user = await AsyncStorage.getItem('@session_id');
+            const token = await AsyncStorage.getItem('@session_token');
 
-    console.log(JSON.stringify(to_send));
-
-    const id_user = await AsyncStorage.getItem('@session_id');
-    const token = await AsyncStorage.getItem('@session_token');
-
-    return fetch("http://localhost:3333/api/1.0.0/user/" + id_user + "/post/" + post_id, {
-        method: 'PATCH',
-        headers: {
-          "X-Authorization": token,
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(to_send)
-    })
-    .then((response) => {
-      console.log("Post has been updated");
-      this.getMyPosts();
-    })
-    .catch((error) => {
-      console.log(error);
-    })
-  }
+            return fetch("http://localhost:3333/api/1.0.0/user/" + id_user + "/post/" + post_id, {
+                method: 'PATCH',
+                headers: {
+                "X-Authorization": token,
+                'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(to_send)
+            })
+            .then((response) => {
+                this.getMyPosts();
+            })
+            .then((response) => {
+                console.log("Post has been updated");
+            })
+            .catch((error) => {
+            console.log(error);
+            })
+        }
       
     
     render(){

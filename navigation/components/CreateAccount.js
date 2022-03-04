@@ -41,6 +41,27 @@ class CreateAccount extends Component {
       this.setState({password: pass})
     } */
 
+    if(this.state.firstname == "")
+    {
+      alert("Enter your first name!")
+    }
+    if(this.state.lastname == "")
+    {
+      alert("Enter your last name!")
+    }
+    if(this.state.email == "")
+    {
+      alert("Enter your email!")
+    }
+    if(this.state.password == "")
+    {
+      alert("Enter your password!")
+    }
+    elseif(this.state.password.length < 8 ||  this.state.password.length > 20)
+    {
+      alert("Your password needs to be min 8 characters and max 20 characters")
+    }
+
     return fetch("http://localhost:3333/api/1.0.0/user", {
         method: 'post',
         headers: {

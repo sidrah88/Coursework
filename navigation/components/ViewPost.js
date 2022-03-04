@@ -67,6 +67,9 @@ class ViewPost extends Component {
         return (
             <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
                 <Text>{this.state.text}</Text>
+                <Text>Likes: </Text>
+                <Text>Dislikes: </Text>
+
             </View>
         );
       }

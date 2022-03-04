@@ -25,14 +25,21 @@ class Login extends Component {
 
     /* //Validation here...
     handleEmailInput = (email) => {
-      //do some validation
       this.setState({email: email})
     }
   
     handlePasswordInput = (pass) => {
-      //do some validation
       this.setState({password: pass})
-    } */
+    }  */
+
+    if(this.state.email == "")
+    {
+      alert("Enter your email adress!")  
+    }
+    if(this.state.password == "")
+    {
+      alert("Enter your password!")
+    }
 
     return fetch("http://localhost:3333/api/1.0.0/login", {
         method: 'post',

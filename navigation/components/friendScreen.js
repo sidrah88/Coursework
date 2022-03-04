@@ -10,7 +10,6 @@ class friendScreen extends Component {
         this.state = {
             userData: [],
             user_givenname: '',
-
             id: '',
         };
       }
@@ -136,7 +135,6 @@ class friendScreen extends Component {
                     renderItem={({item}) => (
                     <View>
                         <Text>{item.user_givenname}</Text>
-                        <Text>{item.user_id}</Text>
 
                         <Button
                             title="View Friend"

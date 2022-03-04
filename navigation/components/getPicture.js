@@ -53,8 +53,8 @@ class GetPicture extends Component{
               uri: this.state.photo,
             }}
             style={{
-              width: 400,
-              height: 400,
+              width: 200,
+              height: 200,
               borderWidth: 5 
             }}
           />
