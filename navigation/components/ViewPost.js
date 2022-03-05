@@ -15,7 +15,8 @@ class ViewPost extends Component {
             post_id: '',
             text: '',
             newText: '',
-            pageLoaded: false
+            pageLoaded: false,
+            numLikes: ''
 
         };
     }
@@ -57,7 +58,8 @@ class ViewPost extends Component {
           .then(response => {
               this.setState({
                   userData: response,
-                  text: response.text
+                  text: response.text,
+                  numLikes: response.numLikes
               })
           })
           .catch((error) => {
@@ -115,9 +117,7 @@ class ViewPost extends Component {
                             color={"grey"}
                             onPress={() => this.updatePost()}
                         />
-                <Text>Likes: </Text>
-                <Text>Dislikes: </Text>
-
+                <Text>Likes: {this.state.numLikes} </Text>
             </View>
         );
       }

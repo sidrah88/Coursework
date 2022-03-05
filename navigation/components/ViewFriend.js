@@ -95,7 +95,8 @@ class ViewFriend extends Component {
       .then(response => {
         this.setState({
           userData: response,
-          text: response.text
+          text: response.text,
+          numLikes: response.numLikes
         })
       })
       .catch((error) => {
@@ -203,6 +204,7 @@ class ViewFriend extends Component {
             <View>
               <Text>{item.text}</Text>
               <Text>{item.post_id}</Text>
+              <Text>Likes: {item.numLikes}</Text>
 
               <Button
                 title="Like Post"
