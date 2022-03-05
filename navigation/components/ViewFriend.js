@@ -149,7 +149,7 @@ class ViewFriend extends Component {
 
     })
       .then((response) => {
-        console.log("Post added");
+        console.log("Post Liked");
         this.getFriendPosts();
       })
       .catch((error) => {
@@ -157,14 +157,14 @@ class ViewFriend extends Component {
       })
   }
 
-  async deleteLike(post_id) {
+  async deleteLike(postID) {
 
     const id_user = await AsyncStorage.getItem('@session_id');
 
     const token = await AsyncStorage.getItem('@session_token');
 
-    return fetch("http://localhost:3333/api/1.0.0/user/" + id_user + "/post/" + post_id + "/" + "dislike", {
-      method: 'post',
+    return fetch("http://localhost:3333/api/1.0.0/user/" + this.props.route.params.friendId  + "/post/" + postID + "/like", {
+      method: 'delete',
       headers: {
         "X-Authorization": token,
         'Content-Type': 'application/json'
@@ -179,10 +179,6 @@ class ViewFriend extends Component {
         console.log(error);
       })
   }
-
-  //display your friends profile page:
-  // like or dislike posts
-  // add a post on friends profile
 
   render() {
     return (
@@ -216,7 +212,7 @@ class ViewFriend extends Component {
               <Button
                 title="Dislike Post"
                 color="black"
-                onPress={() => this.deleteLike()}
+                onPress={() => this.deleteLike(item.post_id)}
               />
             </View>
           )}
