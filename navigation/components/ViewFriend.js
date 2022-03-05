@@ -14,8 +14,6 @@ class ViewFriend extends Component {
       first_name: '',
       last_name: '',
       friend_count: '',
-      like: '',
-      dislike: '',
       photo: null,
       isLoading: false
     };
@@ -26,6 +24,7 @@ class ViewFriend extends Component {
     this.getProfile();
     this.get_profile_image();
     this.getFriendPosts();
+
   }
 
   componentDidUpdate() {
@@ -130,7 +129,7 @@ class ViewFriend extends Component {
       });
   }
 
-  async addLike(like, post_id) {
+  async addLike(postID) {
 
     let addedlike = { like: this.state.like }
 
@@ -140,7 +139,7 @@ class ViewFriend extends Component {
 
     const token = await AsyncStorage.getItem('@session_token');
 
-    return fetch("http://localhost:3333/api/1.0.0/user/" + id_user + "/post/" + this.props.route.params.postId + "/" + like, {
+    return fetch("http://localhost:3333/api/1.0.0/user/" + this.props.route.params.friendId + "/post/" + postID + "/like", {
       method: 'post',
       headers: {
         "X-Authorization": token,
@@ -158,23 +157,18 @@ class ViewFriend extends Component {
       })
   }
 
-  async deleteLike(dislike, post_id) {
-
-    let deleteLike = { dislike: this.state.dislike }
-
-    deleteLike['dislike'];
+  async deleteLike(post_id) {
 
     const id_user = await AsyncStorage.getItem('@session_id');
 
     const token = await AsyncStorage.getItem('@session_token');
 
-    return fetch("http://localhost:3333/api/1.0.0/user/" + id_user + "/post/" + post_id + "/" + dislike, {
+    return fetch("http://localhost:3333/api/1.0.0/user/" + id_user + "/post/" + post_id + "/" + "dislike", {
       method: 'post',
       headers: {
         "X-Authorization": token,
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify(deleteLike)
 
     })
       .then((response) => {
@@ -212,10 +206,12 @@ class ViewFriend extends Component {
           renderItem={({ item }) => (
             <View>
               <Text>{item.text}</Text>
+              <Text>{item.post_id}</Text>
+
               <Button
                 title="Like Post"
                 color="black"
-                onPress={() => this.addLike()}
+                onPress={() => this.addLike(item.post_id)}
               />
               <Button
                 title="Dislike Post"

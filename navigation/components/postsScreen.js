@@ -51,6 +51,9 @@ class postsScreen extends Component {
       }
 
       async deletePost(post_id) {
+
+        alert(post_id);
+        
         
         const id_user = await AsyncStorage.getItem('@session_id');
 
@@ -111,38 +114,7 @@ class postsScreen extends Component {
           });
       }
       
-      async updatePost(post_id)  
-        {
-            let to_send = {};
-
-            if (this.state.newText != this.state.text){
-            to_send['text'] = this.state.newText;
-            }
-
-            console.log(JSON.stringify(to_send));
-            console.log(post_id)
-
-            const id_user = await AsyncStorage.getItem('@session_id');
-            const token = await AsyncStorage.getItem('@session_token');
-
-            return fetch("http://localhost:3333/api/1.0.0/user/" + id_user + "/post/" + post_id, {
-                method: 'PATCH',
-                headers: {
-                "X-Authorization": token,
-                'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(to_send)
-            })
-            .then((response) => {
-                this.getMyPosts();
-            })
-            .then((response) => {
-                console.log("Post has been updated");
-            })
-            .catch((error) => {
-            console.log(error);
-            })
-        }
+      
       
     
     render(){
@@ -164,9 +136,6 @@ class postsScreen extends Component {
                     data={this.state.userData}
                     renderItem={({item}) => (
                     <View>
-                
-                
-
                         <Text>{item.text}</Text>
                         <Button
                             title="View Post"
@@ -179,17 +148,6 @@ class postsScreen extends Component {
                             color="black"
                             onPress={() => this.deletePost(item.post_id)}
                         />
-                        <TextInput 
-                            placeholder="Enter updated post..."
-                            onChangeText={(newText) => this.setState({newText})}
-                            value={this.state.newText}
-                        />
-                        <Button
-                            title="Update"
-                            color={"grey"}
-                            onPress={() => this.updatePost()}
-                        />
-
                     </View>
                 )}
                 keyExtractor={(item,index) => item.post_id.toString()}
