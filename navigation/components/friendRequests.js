@@ -15,6 +15,10 @@ class FriendRequests extends Component {
         };
     }
 
+    static navigationOptions = {
+        drawerLabel: () => null
+    }
+
     componentDidMount(){
         this.getFriendRequests();
     }

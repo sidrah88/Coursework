@@ -32,13 +32,15 @@ class Login extends Component {
       this.setState({password: pass})
     }  */
 
+    
+
     if(this.state.email == "")
     {
-      alert("Enter your email adress!")  
+      throw("Enter your email adress!") 
     }
     if(this.state.password == "")
     {
-      alert("Enter your password!")
+      throw("Enter your password!")
     }
 
     return fetch("http://localhost:3333/api/1.0.0/login", {

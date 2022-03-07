@@ -42,13 +42,13 @@ class App extends Component {
           <Tab.Screen name="Home" component={HomeScreen} />
           <Tab.Screen name="Login" component={LoginScreen} />
           <Tab.Screen name="Create Account" component={CreateAccountScreen} />
-          <Tab.Screen name="Friend Requests" component={friendRequests}/>
+          <Tab.Screen name="Friend Requests" component={friendRequests} options={{
+     drawerItemStyle: {
+       display: "none",
+     },
+   }}/>
           <Tab.Screen name="View Post" component={ViewPost}/>
           <Tab.Screen name="View Friend" component={ViewFriend}/>
-
-
-
-
         </Tab.Navigator>
       </NavigationContainer>
     );

@@ -13,6 +13,11 @@ import postsScreen from './postsScreen';
 const Tab = createBottomTabNavigator();
 
 export default function App() {
+
+  
+
+
+
   return (
       <Tab.Navigator>
         <Tab.Screen name="Profile" component={profileScreen} />
@@ -22,3 +27,4 @@ export default function App() {
       </Tab.Navigator>
   );
 }
+

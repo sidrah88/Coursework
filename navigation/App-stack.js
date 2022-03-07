@@ -9,21 +9,37 @@ import { ScreenStack } from 'react-native-screens';
 import friendRequests from './components/friendRequests';
 import ViewPost from './components/ViewPost';
 import ViewFriend from './components/ViewFriend';
+import Login from './components/login';
 
 
 const Stack = createNativeStackNavigator();
 
 class App extends Component {
+
   render(){
     return (
       <NavigationContainer>
         <Stack.Navigator>
+        
+
           <Stack.Screen name="Home" component={HomeScreen} />
           <Stack.Screen name="Login" component={LoginScreen} />
           <Stack.Screen name="Create Account" component={CreateAccountScreen} />
-          <Stack.Screen name="Friend Requests" component={friendRequests}/>
-          <Stack.Screen name="View Post" component={ViewPost}/>
-          <Stack.Screen name="View Friend" component={ViewFriend}/>
+          <Stack.Screen name="Friend Requests" component={friendRequests} options={{
+     drawerItemStyle: {
+       display: "none",
+     },
+   }}/>
+          <Stack.Screen name="View Post" component={ViewPost} options={{
+     drawerItemStyle: {
+       display: "none",
+     },
+   }}/>
+          <Stack.Screen name="View Friend" component={ViewFriend} options={{
+     drawerItemStyle: {
+       display: "none",
+     },
+   }}/>
 
 
         </Stack.Navigator>

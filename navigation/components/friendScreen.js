@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, Image, Style, Button, TextInput, FlatList } from 'react-native';
+import { View, Text, Image, Style, Button, TextInput, FlatList, ScrollView } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
@@ -11,18 +11,25 @@ class friendScreen extends Component {
             userData: [],
             user_givenname: '',
             id: '',
+            showTheThing: false
+
+
+
         };
       }
 
       componentDidMount(){
         this.getMyFriends();
+        this.state.showTheThing = false;  // to show it  
+
+        
       }
 
-    async addFriend() {
+    async addFriend(friendId) {
 
         const token = await AsyncStorage.getItem('@session_token');
     
-        return fetch("http://localhost:3333/api/1.0.0/user/" + this.state.id + "/friends", {
+        return fetch("http://localhost:3333/api/1.0.0/user/" + friendId + "/friends", {
           method: 'post',
           headers: {
             "X-Authorization": token,
@@ -31,13 +38,29 @@ class friendScreen extends Component {
         })
         .then((response) => {
           console.log("Friend added");
+          showTheThing = true;
         })
         .catch((error) => {
           console.log(error);
         })
-      } 
+      }
+      
+      async getIDfromJSON(jsonstring, name)
+      {
+        var results = [];
+        var name = "name";
+        var searchVal = "my Name";
+        for (var i=0 ; i < obj.list.length ; i++)
+        {
+            if (obj.list[i][searchField] == searchVal) {
+                results.push(obj.list[i]);
+            }
+        }
+      }
 
      async searchFriend() {
+
+        
 
         const token = await AsyncStorage.getItem('@session_token');
     
@@ -49,9 +72,11 @@ class friendScreen extends Component {
           },
         })
         .then((response) => {
+
           if(response.status === 200){
               console.log("search results")
-              console.log(response)
+              
+              //console.log(response)
               return response.json()
          
           }else if(response.status === 400){
@@ -63,8 +88,7 @@ class friendScreen extends Component {
       .then(response => {
           this.setState({
               userData: response,
-              user_givenname: response.user_givenname
-              
+              user_givenname: response.user_givenname,
           })
       })
       .catch((error) => {
@@ -106,23 +130,32 @@ class friendScreen extends Component {
         });
     }
 
+    renderElement(){
+        if(this.state.showTheThing == true)
+           return 
+           
+           <Button
+           title="Add Friend"
+           color="grey"
+           onPress={() => this.addFriend(item.user_id)}
+           />;
+
+        return null;
+    }
+
     render(){
         return (
             <View>
-                <TextInput
+                
+                {/* <TextInput
                     placeholder="Enter name to add a friend..."
                     onChangeText={(id) => this.setState({id})}
                     style={{padding:5, borderWidth:1, margin:5}}
-                />
-                <Button
-                    title="Add Friend"
-                    color="grey"
-                    onPress={() => this.addFriend()}
-                />
+                /> */}
                 <Button
                     title="Search Friends"
                     color="grey"
-                    onPress={() => this.searchFriend()}
+                    onPress={() => this.searchFriend(true)}
                 />  
                 <Button
                     title="Friend Requests"
@@ -134,6 +167,7 @@ class friendScreen extends Component {
                     data={this.state.userData}
                     renderItem={({item}) => (
                     <View>
+                        <ScrollView>
                         <Text>{item.user_givenname}</Text>
 
                         <Button
@@ -141,11 +175,18 @@ class friendScreen extends Component {
                             color="grey"
                             onPress={() => this.props.navigation.navigate("View Friend",{friendId: item.user_id})}
                         />
+                        
+                        { this.renderElement() }
+                         
+                            
+
+                        </ScrollView>
                     </View>
                 )}
                 keyExtractor={(item,index) => item.user_id.toString()}
 
               />
+             
             </View>
         );
     } 

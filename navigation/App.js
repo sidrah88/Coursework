@@ -18,47 +18,36 @@ const Drawer = createDrawerNavigator();
 
 class App extends Component {
 
-  isLoggedIn = async () => {
-
-    const value = await AsyncStorage.getItem('@session_token');
-    console.log(value);
-    if(value !== null) {
-      console.log(value);
-      return true;
-    }
-    else{
-      console.log(value);
-      return false;
-    }
-  }
-
-
   render(){
     return (
       <NavigationContainer>
         <Drawer.Navigator>
+       
           <Drawer.Screen name="Login" component={LoginScreen} />
           <Drawer.Screen name="Home" component={tabNavigation} />
-          <Drawer.Screen name ="Update Account" component={patch} />
+          <Drawer.Screen name ="Update Account" component={patch} options={{
+     drawerItemStyle: {
+       display: "none",
+     },
+   }} />       
           <Drawer.Screen name="CreateAccount" component={CreateAccountScreen} />
-          <Drawer.Screen name="Friend Requests" component={FriendRequests} />
-          <Drawer.Screen name="View Post" component={ViewPost} />
-          <Drawer.Screen name="View Friend" component={ViewFriend} />
-
-
+          <Drawer.Screen name="Friend Requests" component={FriendRequests} options={{
+     drawerItemStyle: {
+       display: "none",
+     },
+   }} />
+          <Drawer.Screen name="View Post" component={ViewPost} options={{
+     drawerItemStyle: {
+       display: "none",
+     },
+   }} />
+          <Drawer.Screen name="View Friend" component={ViewFriend} options={{
+     drawerItemStyle: {
+       display: "none",
+     },
+   }}/>
           <Drawer.Screen name="Log Out" component={LogoutScreen} />
         </Drawer.Navigator>
-        {/* <Drawer.Navigator>
-        <Drawer.Screen name="Home" component={tabNavigation}/>
-        <Drawer.Screen name="Login" component={LoginScreen} />
-          
-          {this.isLoggedIn ? (
-          <>
-          <Drawer.Screen name ="Update Account" component={patch} />
-          </> ):
-          (
-            <Drawer.Screen name="Log Out" component={LogoutScreen} />          )}
-        </Drawer.Navigator> */}
       </NavigationContainer>
     );
   }

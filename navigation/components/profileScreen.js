@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, Image, Style, StyleSheet } from 'react-native';
+import { View, Text, Image, Style, StyleSheet, Button } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import GetPicture from './getPicture';
 
@@ -53,6 +53,13 @@ class profileScreen extends Component {
                 <Text>My Profile!</Text>
                 <Text> {this.state.user.first_name}</Text>
                 <Text> {this.state.user.email}</Text>
+
+                <Button
+                    title="Update Account"
+                    color="black"
+                    onPress={() => this.props.navigation.navigate("Update Account")}
+                />
+
             <GetPicture> </GetPicture>
           </View>
         );
