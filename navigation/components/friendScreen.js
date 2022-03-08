@@ -13,17 +13,12 @@ class friendScreen extends Component {
             id: '',
             showTheThing: false
 
-
-
         };
       }
 
-      componentDidMount(){
-        this.getMyFriends();
-        this.state.showTheThing = false;  // to show it  
-
-        
-      }
+     /*  componentDidMount(){
+        this.getMyFriends();        
+      } */
 
     async addFriend(friendId) {
 
@@ -60,8 +55,6 @@ class friendScreen extends Component {
 
      async searchFriend() {
 
-        
-
         const token = await AsyncStorage.getItem('@session_token');
     
         return fetch("http://localhost:3333/api/1.0.0/search", {
@@ -96,7 +89,7 @@ class friendScreen extends Component {
       });
     } 
 
-    async getMyFriends()
+    /* async getMyFriends()
     {
         const id_user = await AsyncStorage.getItem('@session_id');
         const token = await AsyncStorage.getItem('@session_token');
@@ -128,20 +121,7 @@ class friendScreen extends Component {
         .catch((error) => {
             console.log(error);
         });
-    }
-
-    renderElement(){
-        if(this.state.showTheThing == true)
-           return 
-           
-           <Button
-           title="Add Friend"
-           color="grey"
-           onPress={() => this.addFriend(item.user_id)}
-           />;
-
-        return null;
-    }
+    } */
 
     render(){
         return (
@@ -153,33 +133,36 @@ class friendScreen extends Component {
                     style={{padding:5, borderWidth:1, margin:5}}
                 /> */}
                 <Button
+                    title="My Friends"
+                    color="lightskyblue"
+                    onPress={() => this.props.navigation.navigate("My Friends")}
+                />
+                <Button
                     title="Search Friends"
-                    color="grey"
+                    color="lightslategrey"
                     onPress={() => this.searchFriend(true)}
                 />  
                 <Button
                     title="Friend Requests"
-                    color="black"
+                    color="lightskyblue"
                     onPress={() => this.props.navigation.navigate("Friend Requests")}
                 />
-                <Text>My List of Friends</Text>
                 <FlatList
                     data={this.state.userData}
                     renderItem={({item}) => (
                     <View>
                         <ScrollView>
                         <Text>{item.user_givenname}</Text>
-
                         <Button
                             title="View Friend"
-                            color="grey"
+                            color="lightskyblue"
                             onPress={() => this.props.navigation.navigate("View Friend",{friendId: item.user_id})}
                         />
-                        
-                        { this.renderElement() }
-                         
-                            
-
+                        <Button
+                            title="Add Friend"
+                            color="lightslategrey"
+                            onPress={() => this.addFriend(item.user_id)}
+                        />
                         </ScrollView>
                     </View>
                 )}

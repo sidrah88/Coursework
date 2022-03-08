@@ -9,6 +9,7 @@ import CreateAccountScreen from './components/CreateAccount';
 import friendRequests from './components/friendRequests';
 import ViewPost from './components/ViewPost';
 import ViewFriend from './components/ViewFriend';
+import myFriends from './components/myFriends';
 
 
 const Tab = createBottomTabNavigator();
@@ -47,8 +48,22 @@ class App extends Component {
        display: "none",
      },
    }}/>
-          <Tab.Screen name="View Post" component={ViewPost}/>
-          <Tab.Screen name="View Friend" component={ViewFriend}/>
+          <Tab.Screen name="View Post" component={ViewPost} options={{
+     drawerItemStyle: {
+       display: "none",
+     },
+   }}/>
+          <Tab.Screen name="View Friend" component={ViewFriend} options={{
+     drawerItemStyle: {
+       display: "none",
+     },
+   }}/>
+   <Tab.Screen name="My Friends" component={myFriends} options={{
+     drawerItemStyle: {
+       display: "none",
+     },
+   }}/>
+
         </Tab.Navigator>
       </NavigationContainer>
     );

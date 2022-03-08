@@ -50,15 +50,16 @@ class profileScreen extends Component {
     render(){
         return (
             <View style={styles.container}>
-                <Text>My Profile!</Text>
+                <Text style={styles.titleText} >My Details</Text>
                 <Text> {this.state.user.first_name}</Text>
                 <Text> {this.state.user.email}</Text>
-
+                <View style={styles.buttonstyle}>
                 <Button
                     title="Update Account"
-                    color="black"
+                    color="lightskyblue"
                     onPress={() => this.props.navigation.navigate("Update Account")}
                 />
+                </View>
 
             <GetPicture> </GetPicture>
           </View>
@@ -75,5 +76,16 @@ const styles = StyleSheet.create({
       alignItems: 'center',
       justifyContent: 'center',
     },
+
+    buttonstyle: {
+        color: 'orange',
+
+    },
+
+    titleText: {
+        fontSize: 15,
+        fontWeight: "bold"
+    },
+
   });
 

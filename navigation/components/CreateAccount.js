@@ -128,7 +128,7 @@ class CreateAccount extends Component {
                 />
                 <Button style={styles.button}
                     title="Create an account"
-                    color={"grey"}
+                    color={"lightskyblue"}
                     onPress={() => this.signup()}
                 />
       </View>

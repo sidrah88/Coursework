@@ -109,13 +109,13 @@ class Login extends Component {
                 />
                 <Button 
                     title="Login"
-                    color="grey"
+                    color="lightskyblue"
                     onPress={() => this.login()}
                     
                 />
                 <Button
                     title="Create Account"
-                    color="black"
+                    color="lightslategrey"
                     onPress={() => this.props.navigation.navigate("CreateAccount")}
                 />
         </View>

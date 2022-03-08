@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
-import { View, Text, Button, Alert, TextInput, StyleSheet} from 'react-native';
+import { View, Text, Button, Alert, TextInput, StyleSheet, Image} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+
+import image1 from './../assets/image1.png';
 
 
 class patch extends Component{
@@ -99,6 +101,10 @@ class patch extends Component{
   render(){
       return (
           <View style={styles.container}>
+            <Image source={require('./../assets/image1.png')}
+                        style={{ width: 90, height: 90 }}
+                />
+
             <TextInput style={styles.inputBox}
               placeholder="Enter first name..."
               onChangeText={(new_firstname) => this.setState({new_firstname})}
@@ -121,7 +127,7 @@ class patch extends Component{
             />
             <Button
               title="Update"
-              color={"grey"}
+              color={"lightskyblue"}
               onPress={() => this.updateItem()}
             />
 

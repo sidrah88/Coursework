@@ -11,6 +11,7 @@ import patch from './components/patch';
 import FriendRequests from './components/friendRequests';
 import ViewPost from './components/ViewPost';
 import ViewFriend from './components/ViewFriend';
+import myFriends from './components/myFriends';
 
 
 
@@ -46,6 +47,12 @@ class App extends Component {
        display: "none",
      },
    }}/>
+             <Drawer.Screen name="My Friends" component={myFriends} options={{
+     drawerItemStyle: {
+       display: "none",
+     },
+   }} />
+
           <Drawer.Screen name="Log Out" component={LogoutScreen} />
         </Drawer.Navigator>
       </NavigationContainer>

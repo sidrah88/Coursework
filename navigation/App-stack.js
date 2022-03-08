@@ -10,6 +10,7 @@ import friendRequests from './components/friendRequests';
 import ViewPost from './components/ViewPost';
 import ViewFriend from './components/ViewFriend';
 import Login from './components/login';
+import myFriends from './components/myFriends';
 
 
 const Stack = createNativeStackNavigator();
@@ -36,6 +37,11 @@ class App extends Component {
      },
    }}/>
           <Stack.Screen name="View Friend" component={ViewFriend} options={{
+     drawerItemStyle: {
+       display: "none",
+     },
+   }}/>
+   <Stack.Screen name="My Friends" component={myFriends} options={{
      drawerItemStyle: {
        display: "none",
      },

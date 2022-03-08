@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, Image, Style, Button, FlatList } from 'react-native';
+import { View, Text, Image, Style, Button, FlatList, TextInput, StyleSheet } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
@@ -184,6 +184,7 @@ class ViewFriend extends Component {
   render() {
     return (
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <Text>User Details</Text>
         <Text>User ID: {this.state.user_id}</Text>
         <Text>First Name: {this.state.first_name}</Text>
         <Text>Last Name: {this.state.last_name}</Text>
@@ -195,9 +196,19 @@ class ViewFriend extends Component {
           style={{
             width: 200,
             height: 200,
-            borderWidth: 5
+            borderWidth: 5,
+            borderColor: "lightskyblue",
           }}
         />
+        <TextInput style={styles.inputBox}
+                    placeholder="Enter your post..."
+                    //onChangeText={(text) => this.setState({text})}
+                />
+                <Button
+                    title="Add Post to friends page"
+                    color="lightskyblue"
+                    // onPress={() => this.addPost()}
+                />
         <FlatList
           data={this.state.userData}
           renderItem={({ item }) => (
@@ -208,12 +219,12 @@ class ViewFriend extends Component {
 
               <Button
                 title="Like Post"
-                color="black"
+                color="lightskyblue"
                 onPress={() => this.addLike(item.post_id)}
               />
               <Button
                 title="Dislike Post"
-                color="black"
+                color="lightslategrey"
                 onPress={() => this.deleteLike(item.post_id)}
               />
             </View>
@@ -226,4 +237,21 @@ class ViewFriend extends Component {
 }
 
 export default ViewFriend;
+
+const styles = StyleSheet.create({
+
+  inputBox:{
+    padding:2, borderWidth:1, margin:20
+  },
+  
+  container: {
+    flex: 1,
+    alignItems: "center", 
+    justifyContent: "center",
+    width: 200,
+    height: 100,
+    alignSelf: "center",
+    alignContent: "center"
+  },
+});
 

@@ -55,7 +55,8 @@ class GetPicture extends Component{
             style={{
               width: 200,
               height: 200,
-              borderWidth: 5 
+              borderWidth: 5,
+              borderColor: "lightskyblue",
             }}
           />
         </View>

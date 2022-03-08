@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, Image, Style, Button, FlatList } from 'react-native';
+import { View, Text, Image, Style, Button, FlatList, StyleSheet } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
@@ -10,6 +10,7 @@ class FriendRequests extends Component {
     
         this.state = {
             userData: [],
+            user_givenname: '',
             id: '',
 
         };
@@ -49,7 +50,8 @@ class FriendRequests extends Component {
         .then(response => {
             this.setState({
                 userData: response,
-                id: response.user_id
+                id: response.user_id,
+                user_givenname: response.user_givenname
             })
         })
         .catch((error) => {
@@ -103,21 +105,23 @@ class FriendRequests extends Component {
 
     render(){
         return (
-            <View>
-                <Text> My friend requests </Text>
+            <View style={styles.container}>
+                <Text style={styles.text}> My friend requests </Text>
                 <FlatList
                     data={this.state.userData}
                     renderItem={({item}) => (
                     <View>
                         <Text>{item.user_id}</Text>
+                        <Text>{item.user_givenname}</Text>
+
                         <Button
                             title="Accept Request"
-                            color="grey"
+                            color="lightskyblue"
                             onPress={() => this.acceptRequest(item.user_id)}
                         />
                         <Button
                             title="Delete Request"
-                            color="grey"
+                            color="lightslategrey"
                             onPress={() => this.deleteRequest(item.user_id)}
                         />
                     </View>
@@ -129,3 +133,29 @@ class FriendRequests extends Component {
 }
 
 export default FriendRequests;
+
+const styles = StyleSheet.create({
+
+    inputBox:{
+      height: 42,
+      width: 80,
+      borderBottomWidth: 1,
+      height: 90,
+      width: 200
+    },
+
+    text:{
+        fontSize: 18,
+    },
+    
+    container: {
+      flex: 1,
+      alignItems: "center", 
+      justifyContent: "center",
+      width: 200,
+      height: 100,
+      alignSelf: "center",
+      alignContent: "center"
+    },
+  });
+

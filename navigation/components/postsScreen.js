@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, Image, Style, Button, TextInput, FlatList } from 'react-native';
+import { View, Text, Image, Style, Button, TextInput, FlatList, TouchableOpacity, StyleSheet } from 'react-native';
 import { SearchBar } from "react-native-elements";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -119,35 +119,39 @@ class postsScreen extends Component {
     
     render(){
         return (
-            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                <TextInput
+            <View style={styles.container}>
+                <TextInput style={styles.inputText}
                     placeholder="Enter your post..."
                     onChangeText={(text) => this.setState({text})}
-                    style={{padding:5, borderWidth:1, margin:5}}
                 />
                 <Button
                     title="Add Post"
-                    color="grey"
+                    color="lightskyblue"
                     onPress={() => this.addPost()}
                 />
-                <Text>My Posts</Text>
+                <Text style={styles.text}>My Posts</Text>
 
                 <FlatList
                     data={this.state.userData}
                     renderItem={({item}) => (
                     <View>
-                        <Text>{item.text}</Text>
-                        <Button
+                        <Text style={styles.postText}>{item.text}</Text>
+                        <View>
+                        <Button style={{flexDirection:'row',
+                            justifyContent: 'space-between'}}
                             title="View Post"
-                            color="grey"
+                            color="lightslategrey"
                             //onPress={() => this.getMyPosts(item.post_id)}
                             onPress={() => this.props.navigation.navigate("View Post",{postId: item.post_id})}
                         />
-                        <Button
+                        <Button style={{flexDirection:'row',
+                            justifyContent: 'space-between'}}
                             title="Delete Post"
-                            color="black"
+                            color="lightskyblue"
+                            
                             onPress={() => this.deletePost(item.post_id)}
                         />
+                        </View>
                     </View>
                 )}
                 keyExtractor={(item,index) => item.post_id.toString()}
@@ -158,3 +162,37 @@ class postsScreen extends Component {
 }
 
 export default postsScreen;
+
+const styles = StyleSheet.create({
+
+    inputBox:{
+      height: 42,
+      width: 80,
+      borderBottomWidth: 1,
+      height: 90,
+      width: 200
+    },
+
+    text:{
+        fontSize: 18,
+    },
+
+    postText:{
+        borderWidth: 1,
+        borderColor: "black",
+    },
+
+    inputText:{
+        padding:5, borderWidth:1, margin:20
+    },
+    
+    container: {
+      flex: 1,
+      alignItems: "center", 
+      justifyContent: "center",
+      width: 200,
+      height: 100,
+      alignSelf: "center",
+      alignContent: "center"
+    },
+  });
