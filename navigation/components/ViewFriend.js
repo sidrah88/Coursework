@@ -184,33 +184,6 @@ class ViewFriend extends Component {
       })
   }
 
-  async addPost() {
-
-    let addedPost = {text:this.state.text}
-
-    addedPost['text'];
-
-    const id_user = await AsyncStorage.getItem('@session_id');
-
-    const token = await AsyncStorage.getItem('@session_token');
-
-    return fetch("http://localhost:3333/api/1.0.0/user/" + id_user + "/post", {
-      method: 'post',
-      headers: {
-        "X-Authorization": token,
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(addedPost)
-
-    })
-    .then((response) => {
-      console.log("Post added");
-      this.getMyPosts();
-    })
-    .catch((error) => {
-      console.log(error);
-    })
-  }
 
   render() {
     return (
@@ -239,6 +212,7 @@ class ViewFriend extends Component {
                     title="Add Post to friends page"
                     color="lightskyblue"
                     onPress={() => this.addPost()}
+                    
                 />
         <FlatList
           data={this.state.userData}

@@ -14,11 +14,24 @@ class GetPicture extends Component{
     }
   }
 
+  /* componentDidMount(){
+    this._unsubscribe = this.props.navigation.addListener('focus', () => {
+        this.get_profile_image();
+    });        
+  }
+
+    componentWillUnmount(){
+    this._unsubscribe();
+  } */ 
+
+
+
   async get_profile_image() {
 
     const id_user = await AsyncStorage.getItem('@session_id');
     const token = await AsyncStorage.getItem('@session_token');
 
+    // sends a get request to the API to get a users profile photo
     fetch("http://localhost:3333/api/1.0.0/user/" + id_user + "/photo", {
       method: 'GET',
       headers: {
@@ -40,6 +53,7 @@ class GetPicture extends Component{
     });
   }
 
+  // calls the function 
   componentDidMount(){
     this.get_profile_image();
   }

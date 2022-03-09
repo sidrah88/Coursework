@@ -14,16 +14,13 @@ class profileScreen extends Component {
     }
 
     componentDidMount(){
-        this.unsubsribe = this.props.navigation.addListener('Focus', () => {
+        this._unsubscribe = this.props.navigation.addListener('focus', () => {
             this.getProfile();
-        })
-        this.getProfile();
-
+        });        
     }
 
-    componentWillUnmount()
-    {
-        this.getProfile();
+    componentWillUnmount(){
+        this._unsubscribe();
     }
 
       async getProfile()

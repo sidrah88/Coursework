@@ -26,10 +26,10 @@ class FriendRequests extends Component {
     
     async getFriendRequests()
     {
-
-        
+        // get token from AsyncStorage
         const token = await AsyncStorage.getItem('@session_token');
-
+        
+        // get request sent to the API to get a list of outstanding friend requests 
         return fetch("http://localhost:3333/api/1.0.0/friendrequests", {
             method: 'get',
             headers: {
@@ -40,7 +40,6 @@ class FriendRequests extends Component {
         .then((response) => {
             if(response.status === 200){
                 console.log("got friend request")
-
                 return response.json()
            
             }else if(response.status === 400){
@@ -66,6 +65,7 @@ class FriendRequests extends Component {
         
         const token = await AsyncStorage.getItem('@session_token');
 
+        // post request sent to the API to accept a friend request
         return fetch("http://localhost:3333/api/1.0.0/friendrequests/" + id, {
             method: 'post',
             headers: {
@@ -74,6 +74,7 @@ class FriendRequests extends Component {
             },
         })
         .then((response) => {
+            // returns back all friend requests so the user can choose to accept
             this.getFriendRequests();
         })
         .then((response) => {
@@ -88,6 +89,7 @@ class FriendRequests extends Component {
         
         const token = await AsyncStorage.getItem('@session_token');
 
+        // delete request sent to the API to reject a friend request
         return fetch("http://localhost:3333/api/1.0.0/friendrequests/" + id, {
             method: 'delete',
             headers: {
@@ -111,6 +113,7 @@ class FriendRequests extends Component {
             <View style={styles.container}>
                 <Text style={styles.text}> My friend requests </Text>
                 <FlatList
+                    // displays a list of all the requests allowing the user to accept or delete with the buttons
                     data={this.state.userData}
                     renderItem={({item}) => (
                     <View>
@@ -119,6 +122,7 @@ class FriendRequests extends Component {
                         <Button
                             title="Accept Request"
                             color="lightskyblue"
+                            // when the button is clicked it passes in the users ID 
                             onPress={() => this.acceptRequest(item.user_id)}
                         />
                         <Button

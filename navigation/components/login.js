@@ -32,7 +32,7 @@ class Login extends Component {
       this.setState({password: pass})
     }  */
 
-
+    // Validation
 
     if(this.state.email == "")
     {
@@ -43,9 +43,7 @@ class Login extends Component {
       throw("Enter your password!")
     }
 
- 
-         
-
+    // sends a post request to the API to allow the user to login
     return fetch("http://localhost:3333/api/1.0.0/login", {
         method: 'post',
         headers: {
@@ -90,23 +88,17 @@ class Login extends Component {
         <TextInput style={styles.inputBox} placeholder='password...' onChangeText={this.handlePasswordInput} value={this.state.password} />
       </View> */
 
-      //<ScrollView>
       <View style={styles.container}>
                 
                 <Image source={require('./../assets/image1.png')}
                         style={{ width: 90, height: 90 }}
                 />
-
                 <TextInput
                     placeholder="Enter your email..."
                     onChangeText={(email) => this.setState({email})}
                     value={this.state.email}
                     style={{padding:5, borderWidth:1, margin:5}}
                 />
-                
-                  
-                  
-                
                 <TextInput
                     placeholder="Enter your password..."
                     onChangeText={(password) => this.setState({password})}
@@ -126,7 +118,6 @@ class Login extends Component {
                     onPress={() => this.props.navigation.navigate("CreateAccount")}
                 />
         </View>
-        //<ScrollView/>
     );
   }
 }

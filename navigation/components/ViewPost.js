@@ -21,7 +21,7 @@ class ViewPost extends Component {
         };
     }
 
-    componentDidMount(){
+    /* componentDidMount(){
         this.getSinglePost();
         this.state.pageLoaded = true;
     }
@@ -31,6 +31,17 @@ class ViewPost extends Component {
         this.getSinglePost();
         }
      }
+ */
+     componentDidMount(){
+        this._unsubscribe = this.props.navigation.addListener('focus', () => {
+            this.getSinglePost();
+        });        
+      }
+    
+        componentWillUnmount(){
+        this._unsubscribe();
+      }
+    
 
     async getSinglePost()
       {

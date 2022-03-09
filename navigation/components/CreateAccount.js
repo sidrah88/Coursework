@@ -41,6 +41,8 @@ class CreateAccount extends Component {
       this.setState({password: pass})
     } */
 
+    // Validation to check user input
+
     if(this.state.firstname == "")
     {
       alert("Enter your first name!")
@@ -62,6 +64,7 @@ class CreateAccount extends Component {
       alert("Your password needs to be min 8 characters and max 20 characters")
     }
 
+    // post request sent to the API to create a new user
     return fetch("http://localhost:3333/api/1.0.0/user", {
         method: 'post',
         headers: {

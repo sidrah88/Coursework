@@ -11,7 +11,6 @@ class friendScreen extends Component {
             userData: [],
             user_givenname: '',
             id: '',
-            showTheThing: false
 
         };
       }
@@ -24,6 +23,7 @@ class friendScreen extends Component {
 
         const token = await AsyncStorage.getItem('@session_token');
     
+        // post request sent to the API to add a new friend
         return fetch("http://localhost:3333/api/1.0.0/user/" + friendId + "/friends", {
           method: 'post',
           headers: {
@@ -33,14 +33,13 @@ class friendScreen extends Component {
         })
         .then((response) => {
           console.log("Friend added");
-          showTheThing = true;
         })
         .catch((error) => {
           console.log(error);
         })
       }
       
-      async getIDfromJSON(jsonstring, name)
+      /* async getIDfromJSON(jsonstring, name)
       {
         var results = [];
         var name = "name";
@@ -51,12 +50,13 @@ class friendScreen extends Component {
                 results.push(obj.list[i]);
             }
         }
-      }
+      } */
 
      async searchFriend() {
 
         const token = await AsyncStorage.getItem('@session_token');
     
+        // get request sent to the API to search for everyone on Spacebook
         return fetch("http://localhost:3333/api/1.0.0/search", {
           method: 'get',
           headers: {
@@ -65,13 +65,9 @@ class friendScreen extends Component {
           },
         })
         .then((response) => {
-
           if(response.status === 200){
-              console.log("search results")
-              
-              //console.log(response)
+              console.log("Search result of users")
               return response.json()
-         
           }else if(response.status === 400){
               throw 'Invalid request';
           }else{
@@ -81,6 +77,7 @@ class friendScreen extends Component {
       .then(response => {
           this.setState({
               userData: response,
+              // the name is set so that it can be displayed in the render section 
               user_givenname: response.user_givenname,
           })
       })
@@ -127,15 +124,10 @@ class friendScreen extends Component {
         return (
             <ScrollView>
             <View>
-                
-                {/* <TextInput
-                    placeholder="Enter name to add a friend..."
-                    onChangeText={(id) => this.setState({id})}
-                    style={{padding:5, borderWidth:1, margin:5}}
-                /> */}
                 <Button
                     title="My Friends"
                     color="lightskyblue"
+                    // when this button is clicked it navigates to My Friends page
                     onPress={() => this.props.navigation.navigate("My Friends")}
                 />
                 <Button
@@ -150,15 +142,14 @@ class friendScreen extends Component {
                 />
                 <ScrollView horizontal={true}>
                 <FlatList
-
                     data={this.state.userData}
                     renderItem={({item}) => (
-
                     <View>
                         <Text>{item.user_givenname}</Text>
                         <Button
                             title="View Friend"
                             color="lightskyblue"
+                            // sets a key value pair, so the user ID of a friend can be passed to the View Friend page and used
                             onPress={() => this.props.navigation.navigate("View Friend",{friendId: item.user_id})}
                         />
                         <Button

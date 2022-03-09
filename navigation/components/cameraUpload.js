@@ -21,16 +21,15 @@ class cameraUpload extends Component {
       }
 
       sendToServer = async (data) => {
-        // Get these from AsyncStorage
-        //let id = 10;
-        //let token = "a3b0601e54775e60b01664b1a5273d54"
-
+        
+        // gets user ID and token from AsyncStorage
         const id_user = await AsyncStorage.getItem('@session_id');
         const token = await AsyncStorage.getItem('@session_token');
   
         let res = await fetch(data.base64);
         let blob = await res.blob();
-  
+
+        // post request sent to the API to upload the profile picture
         return fetch("http://localhost:3333/api/1.0.0/user/" + id_user + "/photo", {
             method: "POST",
             headers: {

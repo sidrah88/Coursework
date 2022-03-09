@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     flex: 1,
-    backgroundColor: 'transparent',
+    backgroundColor: 'black',
     flexDirection: 'row',
     margin: 20,
   },

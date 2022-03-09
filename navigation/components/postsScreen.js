@@ -19,8 +19,15 @@ class postsScreen extends Component {
       }
 
     componentDidMount(){
-        this.getMyPosts();
-    }
+        this._unsubscribe = this.props.navigation.addListener('focus', () => {
+            this.getMyPosts();
+        });        
+      }
+    
+        componentWillUnmount(){
+        this._unsubscribe();
+      }
+    
 
     async addPost() {
 
