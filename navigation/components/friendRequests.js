@@ -10,7 +10,7 @@ class FriendRequests extends Component {
     
         this.state = {
             userData: [],
-            user_givenname: '',
+            first_name: '',
             id: '',
 
         };
@@ -26,6 +26,7 @@ class FriendRequests extends Component {
     
     async getFriendRequests()
     {
+
         
         const token = await AsyncStorage.getItem('@session_token');
 
@@ -39,6 +40,7 @@ class FriendRequests extends Component {
         .then((response) => {
             if(response.status === 200){
                 console.log("got friend request")
+
                 return response.json()
            
             }else if(response.status === 400){
@@ -51,12 +53,13 @@ class FriendRequests extends Component {
             this.setState({
                 userData: response,
                 id: response.user_id,
-                user_givenname: response.user_givenname
+                first_name: response.first_name,
             })
         })
         .catch((error) => {
             console.log(error);
         });
+
     }
 
     async acceptRequest(id) {
@@ -111,8 +114,7 @@ class FriendRequests extends Component {
                     data={this.state.userData}
                     renderItem={({item}) => (
                     <View>
-                        <Text>{item.user_id}</Text>
-                        <Text>{item.user_givenname}</Text>
+                        <Text>{item.first_name}</Text>
 
                         <Button
                             title="Accept Request"

@@ -125,6 +125,7 @@ class friendScreen extends Component {
 
     render(){
         return (
+            <ScrollView>
             <View>
                 
                 {/* <TextInput
@@ -147,11 +148,13 @@ class friendScreen extends Component {
                     color="lightskyblue"
                     onPress={() => this.props.navigation.navigate("Friend Requests")}
                 />
+                <ScrollView horizontal={true}>
                 <FlatList
+
                     data={this.state.userData}
                     renderItem={({item}) => (
+
                     <View>
-                        <ScrollView>
                         <Text>{item.user_givenname}</Text>
                         <Button
                             title="View Friend"
@@ -163,14 +166,19 @@ class friendScreen extends Component {
                             color="lightslategrey"
                             onPress={() => this.addFriend(item.user_id)}
                         />
-                        </ScrollView>
                     </View>
+
                 )}
                 keyExtractor={(item,index) => item.user_id.toString()}
 
               />
+            </ScrollView>
+
+
+
              
             </View>
+            </ScrollView>
         );
     } 
 }
