@@ -16,10 +16,10 @@ class Login extends Component {
 
     this.state = {
       email: '',
-      password: ''
+      password: '',
+
     }
   }
-
 
   login = async () => {
 
@@ -32,7 +32,7 @@ class Login extends Component {
       this.setState({password: pass})
     }  */
 
-    
+
 
     if(this.state.email == "")
     {
@@ -42,6 +42,9 @@ class Login extends Component {
     {
       throw("Enter your password!")
     }
+
+ 
+         
 
     return fetch("http://localhost:3333/api/1.0.0/login", {
         method: 'post',
@@ -100,6 +103,10 @@ class Login extends Component {
                     value={this.state.email}
                     style={{padding:5, borderWidth:1, margin:5}}
                 />
+                
+                  
+                  
+                
                 <TextInput
                     placeholder="Enter your password..."
                     onChangeText={(password) => this.setState({password})}

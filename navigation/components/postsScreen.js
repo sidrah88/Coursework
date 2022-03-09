@@ -51,8 +51,6 @@ class postsScreen extends Component {
       }
 
       async deletePost(post_id) {
-
-        alert(post_id);
         
         
         const id_user = await AsyncStorage.getItem('@session_id');
@@ -113,6 +111,18 @@ class postsScreen extends Component {
               console.log(error);
           });
       }
+
+      async savePostAsDraft()
+      {
+
+        //save your drafts to permanent storage within the mobile device
+        //view draft
+        //edit draft
+        //delete draft
+
+        //schedule date and time for when the draft is posted
+
+      }
       
     render(){
         return (
@@ -125,6 +135,11 @@ class postsScreen extends Component {
                     title="Add Post"
                     color="lightskyblue"
                     onPress={() => this.addPost()}
+                />
+                <Button
+                    title="Save as draft"
+                    color="lightskyblue"
+                    onPress={() => this.savePostAsDraft()}
                 />
                 <Text style={styles.text}>My Posts</Text>
 
