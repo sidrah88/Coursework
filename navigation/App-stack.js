@@ -11,6 +11,7 @@ import ViewPost from './components/ViewPost';
 import ViewFriend from './components/ViewFriend';
 import Login from './components/login';
 import myFriends from './components/myFriends';
+import draftpost from './components/draftpost';
 
 
 const Stack = createNativeStackNavigator();
@@ -42,6 +43,11 @@ class App extends Component {
      },
    }}/>
    <Stack.Screen name="My Friends" component={myFriends} options={{
+     drawerItemStyle: {
+       display: "none",
+     },
+   }}/>
+   <Stack.Screen name="Draft Post" component={draftpost} options={{
      drawerItemStyle: {
        display: "none",
      },

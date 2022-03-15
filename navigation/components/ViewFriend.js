@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, Image, Style, Button, FlatList, TextInput, StyleSheet } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
+import postsScreen from './postsScreen';
 
 class ViewFriend extends Component {
 
@@ -184,6 +184,70 @@ class ViewFriend extends Component {
       })
   }
 
+  // ADD POST TO FRIENDS PAGE
+  async addPost() {
+
+    let addedPost = {text:this.state.text}
+
+    addedPost['text'];
+
+    const id_user = await AsyncStorage.getItem('@session_id');
+
+    const token = await AsyncStorage.getItem('@session_token');
+
+    return fetch("http://localhost:3333/api/1.0.0/user/" + id_user + "/post", {
+      method: 'post',
+      headers: {
+        "X-Authorization": token,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(addedPost)
+
+    })
+     .then((response) => {
+      console.log("Post added");
+      this.getMyPosts();
+    }) 
+    .catch((error) => {
+      console.log(error);
+    })
+  }
+
+  async getMyPosts()
+      {
+          const id_user = await AsyncStorage.getItem('@session_id');
+          const token = await AsyncStorage.getItem('@session_token');
+  
+          return fetch("http://localhost:3333/api/1.0.0/user/" + id_user + "/post", {
+              method: 'get',
+              headers: {
+                  "X-Authorization": token,
+                  'Content-Type': 'application/json'
+              },
+          })
+          .then((response) => {
+              if(response.status === 200){
+                  console.log("List of posts found")
+                  return response.json()
+             
+              }else if(response.status === 400){
+                  throw 'Invalid request';
+              }else{
+                  throw 'Something went wrong';
+          }
+          })
+          .then(response => {
+              this.setState({
+                  userData: response,
+                  text: response.text
+              })
+          })
+          .catch((error) => {
+              console.log(error);
+          });
+      }
+
+
 
   render() {
     return (
@@ -206,13 +270,12 @@ class ViewFriend extends Component {
         />
         <TextInput style={styles.inputBox}
                     placeholder="Enter your post..."
-                    //onChangeText={(text) => this.setState({text})}
+                    onChangeText={(text) => this.setState({text})}
                 />
                 <Button
                     title="Add Post to friends page"
                     color="lightskyblue"
-                    onPress={() => this.addPost()}
-                    
+                    onPress={() => this.addPost()}                    
                 />
         <FlatList
           data={this.state.userData}

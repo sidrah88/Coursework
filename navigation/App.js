@@ -12,6 +12,7 @@ import FriendRequests from './components/friendRequests';
 import ViewPost from './components/ViewPost';
 import ViewFriend from './components/ViewFriend';
 import myFriends from './components/myFriends';
+import draftpost from './components/draftpost';
 
 
 
@@ -48,6 +49,11 @@ class App extends Component {
      },
    }}/>
              <Drawer.Screen name="My Friends" component={myFriends} options={{
+     drawerItemStyle: {
+       display: "none",
+     },
+   }} />
+   <Drawer.Screen name="Draft Post" component={draftpost} options={{
      drawerItemStyle: {
        display: "none",
      },

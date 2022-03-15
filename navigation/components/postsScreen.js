@@ -48,41 +48,16 @@ class postsScreen extends Component {
           body: JSON.stringify(addedPost)
 
         })
-        .then((response) => {
+         .then((response) => {
           console.log("Post added");
           this.getMyPosts();
-        })
+        }) 
         .catch((error) => {
           console.log(error);
         })
       }
 
-      async deletePost(post_id) {
-        
-        
-        const id_user = await AsyncStorage.getItem('@session_id');
-
-        const token = await AsyncStorage.getItem('@session_token');
-
-        console.log(post_id);
-
-        return fetch("http://localhost:3333/api/1.0.0/user/" + id_user + "/post/" + post_id, {
-            method: 'delete',
-            headers: {
-                "X-Authorization": token,
-                'Content-Type': 'application/json'
-            },
-        })
-        .then((response) => {
-            this.getMyPosts();
-        })
-        .then((response) => {
-            console.log("Post Deleted")
-        })
-        .catch((error) => {
-          console.log(error);
-        })
-    }
+      
 
 
       async getMyPosts()
@@ -119,17 +94,7 @@ class postsScreen extends Component {
           });
       }
 
-      async savePostAsDraft()
-      {
-
-        //save your drafts to permanent storage within the mobile device
-        //view draft
-        //edit draft
-        //delete draft
-
-        //schedule date and time for when the draft is posted
-
-      }
+      
       
     render(){
         return (
@@ -144,10 +109,12 @@ class postsScreen extends Component {
                     onPress={() => this.addPost()}
                 />
                 <Button
-                    title="Save as draft"
+                    title="Add draft Post"
                     color="lightskyblue"
-                    onPress={() => this.savePostAsDraft()}
+                    onPress={() => this.props.navigation.navigate("Draft Post")}
                 />
+
+                
                 <Text style={styles.text}>My Posts</Text>
 
                 <FlatList
@@ -155,6 +122,7 @@ class postsScreen extends Component {
                     renderItem={({item}) => (
                     <View>
                         <Text style={styles.postText}>{item.text}</Text>
+                        <Text>{item.post_id}</Text>
                         <View>
                         <Button style={{flexDirection:'row',
                             justifyContent: 'space-between'}}
@@ -163,13 +131,7 @@ class postsScreen extends Component {
                             //onPress={() => this.getMyPosts(item.post_id)}
                             onPress={() => this.props.navigation.navigate("View Post",{postId: item.post_id})}
                         />
-                        <Button style={{flexDirection:'row',
-                            justifyContent: 'space-between'}}
-                            title="Delete Post"
-                            color="lightskyblue"
-                            
-                            onPress={() => this.deletePost(item.post_id)}
-                        />
+                        
                         </View>
                     </View>
                 )}
