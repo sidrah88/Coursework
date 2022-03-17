@@ -37,19 +37,19 @@ class draftpost extends Component {
                 this.setState({ loading: false });
             }
 
-        AsyncStorage.setItem('Key_27', this.state.textInputData);
+        AsyncStorage.setItem('My_Key', this.state.textInputData);
           
     }
 
     getPost=()=>{
  
-        AsyncStorage.getItem('Key_27').then((value) => this.setState({ getValue : value }))
+        AsyncStorage.getItem('My_Key').then((value) => this.setState({ getValue : value }))
      
     }
 
     async deletePost()
     {
-        AsyncStorage.removeItem('Key_27');
+        AsyncStorage.removeItem('My_Key');
     }
 
     async editpost()
