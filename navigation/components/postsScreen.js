@@ -14,7 +14,10 @@ class postsScreen extends Component {
             post_id: '',
             text: '',
             newText: '',
-            id: ''
+            id: '',
+
+            textMessage: false,
+            loading: false,
         };
       }
 
@@ -30,6 +33,24 @@ class postsScreen extends Component {
     
 
     async addPost() {
+
+        this.setState({ loading: true })
+        const { text } = this.state;
+        let errorFlag = false;
+
+        if (text) {
+            errorFlag = true;
+            this.setState({ textMessage: false });
+        } else {
+            errorFlag = false;
+            this.setState({ textMessage: true })
+        }
+
+        if (errorFlag) {
+            console.log("errorFlag");            
+        } else {
+            this.setState({ loading: false });
+        }
 
         let addedPost = {text:this.state.text}
 
@@ -56,9 +77,6 @@ class postsScreen extends Component {
           console.log(error);
         })
       }
-
-      
-
 
       async getMyPosts()
       {
@@ -103,6 +121,10 @@ class postsScreen extends Component {
                     placeholder="Enter your post..."
                     onChangeText={(text) => this.setState({text})}
                 />
+                {
+                    this.state.textMessage && <Text >{"Cannot add an empty post"}</Text>
+                }
+
                 <Button
                     title="Add Post"
                     color="lightskyblue"
@@ -114,7 +136,6 @@ class postsScreen extends Component {
                     onPress={() => this.props.navigation.navigate("Draft Post")}
                 />
 
-                
                 <Text style={styles.text}>My Posts</Text>
 
                 <FlatList
@@ -122,7 +143,6 @@ class postsScreen extends Component {
                     renderItem={({item}) => (
                     <View>
                         <Text style={styles.postText}>{item.text}</Text>
-                        <Text>{item.post_id}</Text>
                         <View>
                         <Button style={{flexDirection:'row',
                             justifyContent: 'space-between'}}
@@ -131,7 +151,6 @@ class postsScreen extends Component {
                             //onPress={() => this.getMyPosts(item.post_id)}
                             onPress={() => this.props.navigation.navigate("View Post",{postId: item.post_id})}
                         />
-                        
                         </View>
                     </View>
                 )}

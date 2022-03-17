@@ -16,7 +16,9 @@ class ViewPost extends Component {
             text: '',
             newText: '',
             //pageLoaded: false,
-            numLikes: ''
+            numLikes: '',
+            textMessage: false,
+            loading: false,
 
         };
     }
@@ -80,6 +82,26 @@ class ViewPost extends Component {
 
       async updatePost(post_id)  
         {
+
+
+            this.setState({ loading: true })
+            const { text } = this.state;
+            let errorFlag = false;
+
+            if (text) {
+                errorFlag = true;
+                this.setState({ textMessage: false });
+            } else {
+                errorFlag = false;
+                this.setState({ textMessage: true })
+            }
+
+            if (errorFlag) {
+                console.log("errorFlag");            
+            } else {
+                this.setState({ loading: false });
+            }
+
             let to_send = {};
 
             if (this.state.newText != this.state.text){
@@ -155,6 +177,9 @@ class ViewPost extends Component {
                             value={this.state.newText}
                             clearButtonMode='always'
                         />
+                        {
+                                this.state.textMessage && <Text>{"Cannot update empty post"}</Text>
+                        }
                         <Button
                             title="Update"
                             color={"grey"}

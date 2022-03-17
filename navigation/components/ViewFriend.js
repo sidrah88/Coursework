@@ -195,7 +195,7 @@ class ViewFriend extends Component {
 
     const token = await AsyncStorage.getItem('@session_token');
 
-    return fetch("http://localhost:3333/api/1.0.0/user/" + id_user + "/post", {
+    return fetch("http://localhost:3333/api/1.0.0/user/" + this.props.route.params.friendId + "/post", {
       method: 'post',
       headers: {
         "X-Authorization": token,
@@ -206,7 +206,7 @@ class ViewFriend extends Component {
     })
      .then((response) => {
       console.log("Post added");
-      this.getMyPosts();
+      this.getFriendPosts();
     }) 
     .catch((error) => {
       console.log(error);

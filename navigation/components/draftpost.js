@@ -11,22 +11,50 @@ class draftpost extends Component {
     
         this.state = {
             textInputData: '',
-            getValue: ''
+            getValue: '',
+            textInputDataMessage: false,
+            loading: false,
         };
       }
 
-    async setValueLocally(){
-     
+    async savePost(){
+
+        this.setState({ loading: true })
+        const { textInputData } = this.state;
+        let errorFlag = false;
+
+            if (textInputData) {
+                errorFlag = true;
+                this.setState({ textInputDataMessage: false });
+            } else {
+                errorFlag = false;
+                this.setState({ textInputDataMessage: true })
+            }
+
+            if (errorFlag) {
+                console.log("errorFlag");            
+            } else {
+                this.setState({ loading: false });
+            }
+
         AsyncStorage.setItem('Key_27', this.state.textInputData);
-     
-        alert("Value Stored Successfully.")
-     
+          
     }
 
-    getValueLocally=()=>{
+    getPost=()=>{
  
         AsyncStorage.getItem('Key_27').then((value) => this.setState({ getValue : value }))
      
+    }
+
+    async deletePost()
+    {
+        AsyncStorage.removeItem('Key_27');
+    }
+
+    async editpost()
+    {
+
     }
       
    
@@ -46,16 +74,19 @@ class draftpost extends Component {
                     underlineColorAndroid='transparent'
                     style={styles.TextInputStyle}
                 />
-                <TouchableOpacity onPress={this.setValueLocally.bind(this)} activeOpacity={0.7} style={styles.button} >
+                {
+                    this.state.textInputDataMessage && <Text>{"Cannot leave draft post empty"}</Text>
+                }
+                <TouchableOpacity onPress={this.savePost.bind(this)} activeOpacity={0.7} style={styles.button} >
                     <Text style={styles.buttonText}> SAVE POST AS DRAFT </Text>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={this.getValueLocally} activeOpacity={0.7} style={styles.button} >
+                <TouchableOpacity onPress={this.getPost} activeOpacity={0.7} style={styles.button} >
                     <Text style={styles.buttonText}> VIEW DRAFT </Text>
                 </TouchableOpacity>
                 <TouchableOpacity activeOpacity={0.7} style={styles.button} >
                     <Text style={styles.buttonText}> EDIT DRAFT </Text>
                 </TouchableOpacity>
-                <TouchableOpacity activeOpacity={0.7} style={styles.button} >
+                <TouchableOpacity onPress={this.deletePost} activeOpacity={0.7} style={styles.button} >
                     <Text style={styles.buttonText}> DELETE DRAFT </Text>
                 </TouchableOpacity>
                 <Text style={styles.text}> { this.state.getValue } </Text>

@@ -5,20 +5,82 @@ import { Text, TextInput, View, Button, StyleSheet, Alert, Image } from 'react-n
 //import ButtonGroup from "react-bootstrap/ButtonGroup";
 import image1 from './../assets/image1.png';
 
-
 class CreateAccount extends Component {
   constructor(props){
     super(props);
 
     this.state = {
-        firstname : '',
-        lastname: '',
+        firstname : "",
+        lastname: "",
         email: '',
-        password: ''
+        password: '',
+
+        firstnameMessage: false,
+        lastnameMessage: false,
+        emailMessage: false,
+        passwordMessage: false,
+        loading: false,
     }
   }
 
   signup = async () => {
+
+    this.setState({loading : true})
+    
+    const { firstname, lastname, email, password } = this.state;
+    let errorFlag = false;
+
+    if(firstname)
+    {
+      errorFlag = true;
+      this.setState({firstname:false})
+    }
+    else{
+      errorFlag = false;
+      this.setState({firstnameMessage: true})
+    }
+
+    if(lastname)
+    {
+      errorFlag = true;
+      this.setState({lastname:false})
+    }
+    else{
+      errorFlag = false;
+      this.setState({lastnameMessage: true})
+    }
+
+    if(email)
+    {
+      errorFlag = true;
+      this.setState({email:false})
+    }
+    else{
+      errorFlag = false;
+      this.setState({emailMessage: true})
+    }
+
+    if(password)
+    {
+      errorFlag = true;
+      this.setState({password:false})
+    }
+    else{
+      errorFlag = false;
+      this.setState({passwordMessage: true})
+    }
+
+    if (errorFlag) {
+      console.log("errorFlag");
+      
+      /** Call Your API */
+    } else {
+      this.setState({ loading: false });
+    }
+
+
+
+    
 
   /*   //Validation here...
     handleFirstNameInput = (firstname) => {
@@ -43,26 +105,32 @@ class CreateAccount extends Component {
 
     // Validation to check user input
 
-    if(this.state.firstname == "")
+   /*  if(this.state.firstname == "")
     {
       alert("Enter your first name!")
+      return false;
     }
-    if(this.state.lastname == "")
+    else if(this.state.lastname == "")
     {
       alert("Enter your last name!")
+      return false;
     }
-    if(this.state.email == "")
+    else if(this.state.email == "")
     {
       alert("Enter your email!")
+      return false;
     }
-    if(this.state.password == "")
+    else if(this.state.password == "")
     {
       alert("Enter your password!")
+      return false;
     }
-    if(this.state.password.length < 8 ||  this.state.password.length > 20)
+    else if(this.state.password.length < 8 ||  this.state.password.length > 20)
     {
       alert("Your password needs to be min 8 characters and max 20 characters")
+      return false;
     }
+ */
 
     // post request sent to the API to create a new user
     return fetch("http://localhost:3333/api/1.0.0/user", {
@@ -110,18 +178,27 @@ class CreateAccount extends Component {
                     value={this.state.first_name}
                     style={{padding:5, borderWidth:1, margin:5}}
                 />
+                {
+                  this.state.firstnameMessage && <Text>{"First name is required"}</Text>
+                }
                 <TextInput
                     placeholder="Enter your last name..."
                     onChangeText={(last_name) => this.setState({last_name})}
                     value={this.state.last_name}
                     style={{padding:5, borderWidth:1, margin:5}}
                 />
+                {
+                  this.state.lastnameMessage && <Text>{"Last name is required"}</Text>
+                }
                 <TextInput
                     placeholder="Enter your email..."
                     onChangeText={(email) => this.setState({email})}
                     value={this.state.email}
                     style={{padding:5, borderWidth:1, margin:5}}
                 />
+                {
+                  this.state.emailMessage && <Text>{"Email is required"}</Text>
+                }
                 <TextInput
                     placeholder="Enter your password..."
                     onChangeText={(password) => this.setState({password})}
@@ -129,6 +206,9 @@ class CreateAccount extends Component {
                     secureTextEntry
                     style={{padding:5, borderWidth:1, margin:5}}
                 />
+                {
+                  this.state.passwordMessage && <Text>{"Password is required"}</Text>
+                }
                 <Button style={styles.button}
                     title="Create an account"
                     color={"lightskyblue"}

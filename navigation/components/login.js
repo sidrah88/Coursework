@@ -18,10 +18,51 @@ class Login extends Component {
       email: '',
       password: '',
 
+      emailMessage: false,
+      passwordMessage: false,
+      loading: false,
+
     }
   }
 
   login = async () => {
+
+    this.setState({loading:true})
+    const {email, password} = this.state;
+    let errorFlag = false;
+
+    if(email)
+    {
+      errorFlag = true;
+      this.setState({emailMessage: false})
+    }
+    else{
+      errorFlag = false;
+      this.setState({emailMessage: true})
+    }
+
+    if(password)
+    {
+      errorFlag = true;
+      this.setState({passwordMessage: false})
+    }
+    else{
+      errorFlag = false;
+      this.setState({passwordMessage: true})
+    }
+
+    if (errorFlag) {
+      console.log("errorFlag");
+      
+      /** Call Your API */
+    } else {
+      this.setState({ loading: false });
+    }
+
+
+
+
+
 
     /* //Validation here...
     handleEmailInput = (email) => {
@@ -33,15 +74,6 @@ class Login extends Component {
     }  */
 
     // Validation
-
-    if(this.state.email == "")
-    {
-      throw("Enter your email adress!") 
-    }
-    if(this.state.password == "")
-    {
-      throw("Enter your password!")
-    }
 
     // sends a post request to the API to allow the user to login
     return fetch("http://localhost:3333/api/1.0.0/login", {
@@ -99,6 +131,9 @@ class Login extends Component {
                     value={this.state.email}
                     style={{padding:5, borderWidth:1, margin:5}}
                 />
+                {
+                  this.state.emailMessage && <Text>{"Email is required"}</Text>
+                }
                 <TextInput
                     placeholder="Enter your password..."
                     onChangeText={(password) => this.setState({password})}
@@ -106,6 +141,9 @@ class Login extends Component {
                     secureTextEntry
                     style={{padding:5, borderWidth:1, margin:5}}
                 />
+                {
+                  this.state.passwordMessage && <Text>{"Password is required"}</Text>
+                }
                 <Button 
                     title="Login"
                     color="lightskyblue"
