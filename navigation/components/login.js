@@ -5,7 +5,7 @@ import { ScrollView } from 'react-native-gesture-handler';
 import image1 from './../assets/image1.png';
 
 class Login extends Component {
-  constructor(props){
+  constructor(props) {
     super(props);
 
     this.state = {
@@ -23,28 +23,26 @@ class Login extends Component {
 
     // login validation 
 
-    this.setState({loading:true})
-    const {email, password} = this.state;
+    this.setState({ loading: true })
+    const { email, password } = this.state;
     let errorFlag = false;
 
-    if(email)
-    {
+    if (email) {
       errorFlag = true;
-      this.setState({emailMessage: false})
+      this.setState({ emailMessage: false })
     }
-    else{
+    else {
       errorFlag = false;
-      this.setState({emailMessage: true})
+      this.setState({ emailMessage: true })
     }
 
-    if(password)
-    {
+    if (password) {
       errorFlag = true;
-      this.setState({passwordMessage: false})
+      this.setState({ passwordMessage: false })
     }
-    else{
+    else {
       errorFlag = false;
-      this.setState({passwordMessage: true})
+      this.setState({ passwordMessage: true })
     }
 
     if (errorFlag) {
@@ -55,90 +53,84 @@ class Login extends Component {
 
     // sends a post request to the API to allow the user to login
     return fetch("http://localhost:3333/api/1.0.0/login", {
-        method: 'post',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(this.state)
+      method: 'post',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(this.state)
     })
-    .then((response) => {
-        if(response.status === 200){
-            return response.json()
-        }else if(response.status === 400){
-            throw 'Invalid email or password';
-        }else{
-            throw 'Something went wrong';
+      .then((response) => {
+        if (response.status === 200) {
+          return response.json()
+        } else if (response.status === 400) {
+          throw 'Invalid email or password';
+        } else {
+          throw 'Something went wrong';
         }
-    })
-    .then(async (responseJson) => {
-            console.log(responseJson);
-            // stores the ID and the token of the user
-            await AsyncStorage.setItem('@session_id', responseJson.id);
-            await AsyncStorage.setItem('@session_token', responseJson.token);
-            // after successful login, it navigates the user to the home page
-            this.props.navigation.navigate("Home");
-    })
-    .catch((error) => {
+      })
+      .then(async (responseJson) => {
+        console.log(responseJson);
+        // stores the ID and the token of the user
+        await AsyncStorage.setItem('@session_id', responseJson.id);
+        await AsyncStorage.setItem('@session_token', responseJson.token);
+        // after successful login, it navigates the user to the home page
+        this.props.navigation.navigate("Home");
+      })
+      .catch((error) => {
         console.log(error);
-    })
+      })
   }
 
   render() {
     return (
       <View style={styles.container}>
-                <Image source={require('./../assets/image1.png')}
-                        style={{ width: 90, height: 90 }}
-                />
-                <TextInput
-                    placeholder="Enter your email..."
-                    onChangeText={(email) => this.setState({email})}
-                    value={this.state.email}
-                    style={{padding:5, borderWidth:1, margin:5}}
-                />
-                {
-                  // displays an error message if the email input is left blank
-                  this.state.emailMessage && <Text>{"Email is required"}</Text>
-                }
-                <TextInput
-                    placeholder="Enter your password..."
-                    onChangeText={(password) => this.setState({password})}
-                    value={this.state.password}
-                    secureTextEntry
-                    style={{padding:5, borderWidth:1, margin:5}}
-                />
-                {
-                  //displays an error message if the password section is left blank
-                  this.state.passwordMessage && <Text>{"Password is required"}</Text>
-                }
-                <Button 
-                    title="Login"
-                    color="lightskyblue"
-                    onPress={() => this.login()}
-                />
-                <Button
-                    title="Create Account"
-                    color="lightslategrey"
-                    // once clicked, navigates the user to the create account page
-                    onPress={() => this.props.navigation.navigate("CreateAccount")}
-                />
-        </View>
+        <Image source={require('./../assets/image1.png')}
+          style={{ width: 90, height: 90 }}
+        />
+        <TextInput style={styles.inputText}
+          placeholder="Enter your email..."
+          onChangeText={(email) => this.setState({ email })}
+          value={this.state.email}
+        />
+        {
+          // displays an error message if the email input is left blank
+          this.state.emailMessage && <Text>{"Email is required"}</Text>
+        }
+        <TextInput style={styles.inputText}
+          placeholder="Enter your password..."
+          onChangeText={(password) => this.setState({ password })}
+          value={this.state.password}
+          secureTextEntry
+        />
+        {
+          //displays an error message if the password section is left blank
+          this.state.passwordMessage && <Text>{"Password is required"}</Text>
+        }
+        <Button
+          title="Login"
+          color="lightskyblue"
+          onPress={() => this.login()}
+        />
+        <Button
+          title="Create Account"
+          color="lightslategrey"
+          // once clicked, navigates the user to the create account page
+          onPress={() => this.props.navigation.navigate("CreateAccount")}
+        />
+      </View>
     );
   }
 }
 
 const styles = StyleSheet.create({
 
-  inputBox:{
-    height: 42,
-    width: 80,
-    borderBottomWidth: 1,
-    height: 90,
-    width: 200
+  inputText: {
+    padding: 5, borderWidth: 1, margin: 5
   },
-  
+
   container: {
     flex: 1,
-    alignItems: "center", 
+    alignItems: "center",
     justifyContent: "center",
     width: 200,
     height: 100,

@@ -14,17 +14,13 @@ const Tab = createBottomTabNavigator();
 
 export default function App() {
 
-  
-
-
-
   return (
-      <Tab.Navigator>
-        <Tab.Screen name="Profile" component={profileScreen} />
-        <Tab.Screen name="Photo" component={cameraUpload} />
-        <Tab.Screen name="Friends" component={friendScreen} />
-        <Tab.Screen name="Posts" component={postsScreen} />
-      </Tab.Navigator>
+    <Tab.Navigator>
+      <Tab.Screen name="Profile" component={profileScreen} />
+      <Tab.Screen name="Photo" component={cameraUpload} />
+      <Tab.Screen name="Friends" component={friendScreen} />
+      <Tab.Screen name="Posts" component={postsScreen} />
+    </Tab.Navigator>
   );
 }
 

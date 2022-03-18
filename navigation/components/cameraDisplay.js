@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { Camera } from 'expo-camera';
 
-class cameraDisplay extends Component{
-  constructor(props){
+class cameraDisplay extends Component {
+  constructor(props) {
     super(props);
 
     this.state = {
@@ -12,14 +12,14 @@ class cameraDisplay extends Component{
     }
   }
 
-  async componentDidMount(){
+  async componentDidMount() {
     const { status } = await Camera.requestCameraPermissionsAsync();
-    this.setState({hasPermission: status === 'granted'});
+    this.setState({ hasPermission: status === 'granted' });
   }
 
-  render(){
-    if(this.state.hasPermission){
-      return(
+  render() {
+    if (this.state.hasPermission) {
+      return (
         <View style={styles.container}>
           <Camera style={styles.camera} type={this.state.type}>
             <View style={styles.buttonContainer}>
@@ -27,10 +27,10 @@ class cameraDisplay extends Component{
                 style={styles.button}
                 onPress={() => {
                   let type = type === Camera.Constants.Type.back
-                  ? Camera.Constants.Type.front
-                  : Camera.Constants.Type.back;
+                    ? Camera.Constants.Type.front
+                    : Camera.Constants.Type.back;
 
-                  this.setState({type: type});
+                  this.setState({ type: type });
                 }}>
                 <Text style={styles.text}> Flip </Text>
               </TouchableOpacity>
@@ -38,8 +38,8 @@ class cameraDisplay extends Component{
           </Camera>
         </View>
       );
-    }else{
-      return(
+    } else {
+      return (
         <Text>No access to camera</Text>
       );
     }

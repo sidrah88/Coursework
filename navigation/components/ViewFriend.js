@@ -39,8 +39,12 @@ class ViewFriend extends Component {
   }
 
   async getProfile() {
+
     //const id_user = await AsyncStorage.getItem('@session_id');
     const token = await AsyncStorage.getItem('@session_token');
+
+    // sends a get request to the API to get a friends profile page
+    // the friendID key is used to the get the current friends ID to get their profile page
     return fetch("http://localhost:3333/api/1.0.0/user/" + this.props.route.params.friendId, {
       method: 'get',
       headers: {
@@ -77,6 +81,8 @@ class ViewFriend extends Component {
     const id_user = await AsyncStorage.getItem('@session_id');
     const token = await AsyncStorage.getItem('@session_token');
 
+    // get request sent to the API to get all the posts of the friend
+    // uses the same key value to get the friend ID
     return fetch("http://localhost:3333/api/1.0.0/user/" + this.props.route.params.friendId + "/post", {
       method: 'get',
       headers: {
@@ -112,6 +118,7 @@ class ViewFriend extends Component {
     const id_user = await AsyncStorage.getItem('@session_id');
     const token = await AsyncStorage.getItem('@session_token');
 
+    // get request sent to the API to get the friends profile picture
     fetch("http://localhost:3333/api/1.0.0/user/" + this.props.route.params.friendId + "/photo", {
       method: 'GET',
       headers: {
@@ -143,6 +150,8 @@ class ViewFriend extends Component {
 
     const token = await AsyncStorage.getItem('@session_token');
 
+    //post request sent to the API to add a like on a friends post
+    // postID is sent as the key to get the ID of a friends post
     return fetch("http://localhost:3333/api/1.0.0/user/" + this.props.route.params.friendId + "/post/" + postID + "/like", {
       method: 'post',
       headers: {
@@ -167,7 +176,8 @@ class ViewFriend extends Component {
 
     const token = await AsyncStorage.getItem('@session_token');
 
-    return fetch("http://localhost:3333/api/1.0.0/user/" + this.props.route.params.friendId  + "/post/" + postID + "/like", {
+    // delete request sent to the API to delete a like from a friends post
+    return fetch("http://localhost:3333/api/1.0.0/user/" + this.props.route.params.friendId + "/post/" + postID + "/like", {
       method: 'delete',
       headers: {
         "X-Authorization": token,
@@ -187,7 +197,7 @@ class ViewFriend extends Component {
   // ADD POST TO FRIENDS PAGE
   async addPost() {
 
-    let addedPost = {text:this.state.text}
+    let addedPost = { text: this.state.text }
 
     addedPost['text'];
 
@@ -195,6 +205,7 @@ class ViewFriend extends Component {
 
     const token = await AsyncStorage.getItem('@session_token');
 
+    // post request sent to the API to add a post with the friends ID
     return fetch("http://localhost:3333/api/1.0.0/user/" + this.props.route.params.friendId + "/post", {
       method: 'post',
       headers: {
@@ -204,48 +215,47 @@ class ViewFriend extends Component {
       body: JSON.stringify(addedPost)
 
     })
-     .then((response) => {
-      console.log("Post added");
-      this.getFriendPosts();
-    }) 
-    .catch((error) => {
-      console.log(error);
-    })
+      .then((response) => {
+        console.log("Post added");
+        this.getFriendPosts();
+      })
+      .catch((error) => {
+        console.log(error);
+      })
   }
 
-  async getMyPosts()
-      {
-          const id_user = await AsyncStorage.getItem('@session_id');
-          const token = await AsyncStorage.getItem('@session_token');
-  
-          return fetch("http://localhost:3333/api/1.0.0/user/" + id_user + "/post", {
-              method: 'get',
-              headers: {
-                  "X-Authorization": token,
-                  'Content-Type': 'application/json'
-              },
-          })
-          .then((response) => {
-              if(response.status === 200){
-                  console.log("List of posts found")
-                  return response.json()
-             
-              }else if(response.status === 400){
-                  throw 'Invalid request';
-              }else{
-                  throw 'Something went wrong';
-          }
-          })
-          .then(response => {
-              this.setState({
-                  userData: response,
-                  text: response.text
-              })
-          })
-          .catch((error) => {
-              console.log(error);
-          });
-      }
+  async getMyPosts() {
+    const id_user = await AsyncStorage.getItem('@session_id');
+    const token = await AsyncStorage.getItem('@session_token');
+
+    return fetch("http://localhost:3333/api/1.0.0/user/" + id_user + "/post", {
+      method: 'get',
+      headers: {
+        "X-Authorization": token,
+        'Content-Type': 'application/json'
+      },
+    })
+      .then((response) => {
+        if (response.status === 200) {
+          console.log("List of posts found")
+          return response.json()
+
+        } else if (response.status === 400) {
+          throw 'Invalid request';
+        } else {
+          throw 'Something went wrong';
+        }
+      })
+      .then(response => {
+        this.setState({
+          userData: response,
+          text: response.text
+        })
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
 
 
 
@@ -269,14 +279,14 @@ class ViewFriend extends Component {
           }}
         />
         <TextInput style={styles.inputBox}
-                    placeholder="Enter your post..."
-                    onChangeText={(text) => this.setState({text})}
-                />
-                <Button
-                    title="Add Post to friends page"
-                    color="lightskyblue"
-                    onPress={() => this.addPost()}                    
-                />
+          placeholder="Enter your post..."
+          onChangeText={(text) => this.setState({ text })}
+        />
+        <Button
+          title="Add Post to friends page"
+          color="lightskyblue"
+          onPress={() => this.addPost()}
+        />
         <FlatList
           data={this.state.userData}
           renderItem={({ item }) => (
@@ -288,6 +298,7 @@ class ViewFriend extends Component {
               <Button
                 title="Like Post"
                 color="lightskyblue"
+                // sends the post ID as a parameter to the add like function
                 onPress={() => this.addLike(item.post_id)}
               />
               <Button
@@ -308,13 +319,13 @@ export default ViewFriend;
 
 const styles = StyleSheet.create({
 
-  inputBox:{
-    padding:2, borderWidth:1, margin:20
+  inputBox: {
+    padding: 2, borderWidth: 1, margin: 20
   },
-  
+
   container: {
     flex: 1,
-    alignItems: "center", 
+    alignItems: "center",
     justifyContent: "center",
     width: 200,
     height: 100,

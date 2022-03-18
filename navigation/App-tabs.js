@@ -16,7 +16,7 @@ import draftpost from './components/draftpost';
 const Tab = createBottomTabNavigator();
 
 class App extends Component {
-  render(){
+  render() {
     return (
       <NavigationContainer>
         <Tab.Navigator
@@ -29,12 +29,11 @@ class App extends Component {
                   ? 'home'
                   : 'home-outline';
               } else if (route.name === 'Login') {
-                iconName = focused 
-                  ? 'beer' 
+                iconName = focused
+                  ? 'beer'
                   : 'beer-outline';
               }
 
-              // You can return any component that you like here!
               return <Ionicons name={iconName} size={size} color={color} />;
             },
             tabBarActiveTintColor: 'tomato',
@@ -45,36 +44,36 @@ class App extends Component {
           <Tab.Screen name="Login" component={LoginScreen} />
           <Tab.Screen name="Create Account" component={CreateAccountScreen} />
           <Tab.Screen name="Friend Requests" component={friendRequests} options={{
-     drawerItemStyle: {
-       display: "none",
-     },
-   }}/>
+            drawerItemStyle: {
+              display: "none",
+            },
+          }} />
           <Tab.Screen name="View Post" component={ViewPost} options={{
-     drawerItemStyle: {
-       display: "none",
-     },
-   }}/>
+            drawerItemStyle: {
+              display: "none",
+            },
+          }} />
           <Tab.Screen name="View Friend" component={ViewFriend} options={{
-     drawerItemStyle: {
-       display: "none",
-     },
-   }}/>
-   <Tab.Screen name="My Friends" component={myFriends} options={{
-     drawerItemStyle: {
-       display: "none",
-     },
-   }}/>
-   <Tab.Screen name="Draft Post" component={draftpost} options={{
-     drawerItemStyle: {
-       display: "none",
-     },
-   }}/>
+            drawerItemStyle: {
+              display: "none",
+            },
+          }} />
+          <Tab.Screen name="My Friends" component={myFriends} options={{
+            drawerItemStyle: {
+              display: "none",
+            },
+          }} />
+          <Tab.Screen name="Draft Post" component={draftpost} options={{
+            drawerItemStyle: {
+              display: "none",
+            },
+          }} />
 
         </Tab.Navigator>
       </NavigationContainer>
     );
   }
-  
+
 }
 
 export default App;

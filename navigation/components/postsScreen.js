@@ -5,9 +5,9 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 class postsScreen extends Component {
-    constructor(props){
+    constructor(props) {
         super(props);
-    
+
         this.state = {
             userData: [],
             user_givenname: '',
@@ -19,20 +19,22 @@ class postsScreen extends Component {
             textMessage: false,
             loading: false,
         };
-      }
+    }
 
-    componentDidMount(){
+    componentDidMount() {
         this._unsubscribe = this.props.navigation.addListener('focus', () => {
             this.getMyPosts();
-        });        
-      }
-    
-        componentWillUnmount(){
+        });
+    }
+
+    componentWillUnmount() {
         this._unsubscribe();
-      }
-    
+    }
+
 
     async addPost() {
+
+        // Validation
 
         this.setState({ loading: true })
         const { text } = this.state;
@@ -47,81 +49,85 @@ class postsScreen extends Component {
         }
 
         if (errorFlag) {
-            console.log("errorFlag");            
+            console.log("errorFlag");
         } else {
             this.setState({ loading: false });
         }
 
-        let addedPost = {text:this.state.text}
+        let addedPost = { text: this.state.text }
 
         addedPost['text'];
 
         const id_user = await AsyncStorage.getItem('@session_id');
 
         const token = await AsyncStorage.getItem('@session_token');
-    
+
+        // post request sent to the API to add a post for the user
         return fetch("http://localhost:3333/api/1.0.0/user/" + id_user + "/post", {
-          method: 'post',
-          headers: {
-            "X-Authorization": token,
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(addedPost)
+            method: 'post',
+            headers: {
+                "X-Authorization": token,
+                'Content-Type': 'application/json'
+            },
+            // text post is added to the body
+            body: JSON.stringify(addedPost)
 
         })
-         .then((response) => {
-          console.log("Post added");
-          this.getMyPosts();
-        }) 
-        .catch((error) => {
-          console.log(error);
+            .then((response) => {
+                console.log("Post added");
+                this.getMyPosts();
+            })
+            .catch((error) => {
+                console.log(error);
+            })
+    }
+
+    async getMyPosts() {
+        const id_user = await AsyncStorage.getItem('@session_id');
+        const token = await AsyncStorage.getItem('@session_token');
+
+        // get request sent to the API to get all posts for a given user
+        return fetch("http://localhost:3333/api/1.0.0/user/" + id_user + "/post", {
+            method: 'get',
+            headers: {
+                "X-Authorization": token,
+                'Content-Type': 'application/json'
+            },
         })
-      }
+            .then((response) => {
+                if (response.status === 200) {
+                    console.log("List of posts found")
+                    return response.json()
 
-      async getMyPosts()
-      {
-          const id_user = await AsyncStorage.getItem('@session_id');
-          const token = await AsyncStorage.getItem('@session_token');
-  
-          return fetch("http://localhost:3333/api/1.0.0/user/" + id_user + "/post", {
-              method: 'get',
-              headers: {
-                  "X-Authorization": token,
-                  'Content-Type': 'application/json'
-              },
-          })
-          .then((response) => {
-              if(response.status === 200){
-                  console.log("List of posts found")
-                  return response.json()
-             
-              }else if(response.status === 400){
-                  throw 'Invalid request';
-              }else{
-                  throw 'Something went wrong';
-          }
-          })
-          .then(response => {
-              this.setState({
-                  userData: response,
-                  text: response.text
-              })
-          })
-          .catch((error) => {
-              console.log(error);
-          });
-      }
+                } else if (response.status === 400) {
+                    throw 'Invalid request';
+                } else {
+                    throw 'Something went wrong';
+                }
+            })
+            .then(response => {
+                this.setState({
+                    userData: response,
+                    // sets the text
+                    text: response.text
+                })
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    }
 
-      
-      
-    render(){
+
+
+    render() {
         return (
             <View style={styles.container}>
                 <TextInput style={styles.inputText}
                     placeholder="Enter your post..."
-                    onChangeText={(text) => this.setState({text})}
+                    onChangeText={(text) => this.setState({ text })}
                 />
                 {
+                    // error message displayed when the user tries to add an empty post
                     this.state.textMessage && <Text >{"Cannot add an empty post"}</Text>
                 }
 
@@ -140,59 +146,50 @@ class postsScreen extends Component {
 
                 <FlatList
                     data={this.state.userData}
-                    renderItem={({item}) => (
-                    <View>
-                        <Text style={styles.postText}>{item.text}</Text>
+                    renderItem={({ item }) => (
                         <View>
-                        <Button style={{flexDirection:'row',
-                            justifyContent: 'space-between'}}
-                            title="View Post"
-                            color="lightslategrey"
-                            //onPress={() => this.getMyPosts(item.post_id)}
-                            onPress={() => this.props.navigation.navigate("View Post",{postId: item.post_id})}
-                        />
+                            <Text style={styles.postText}>{item.text}</Text>
+                            <View>
+                                <Button
+                                    title="View Post"
+                                    color="lightslategrey"
+                                    // sends the post ID of individual posts to the View Post page as a key
+                                    onPress={() => this.props.navigation.navigate("View Post", { postId: item.post_id })}
+                                />
+                            </View>
                         </View>
-                    </View>
-                )}
-                keyExtractor={(item,index) => item.post_id.toString()}
-              />
+                    )}
+                    keyExtractor={(item, index) => item.post_id.toString()}
+                />
             </View>
         );
-    } 
+    }
 }
 
 export default postsScreen;
 
 const styles = StyleSheet.create({
 
-    inputBox:{
-      height: 42,
-      width: 80,
-      borderBottomWidth: 1,
-      height: 90,
-      width: 200
-    },
-
-    text:{
+    text: {
         fontSize: 18,
     },
 
-    postText:{
+    postText: {
         borderWidth: 1,
         borderColor: "black",
     },
 
-    inputText:{
-        padding:5, borderWidth:1, margin:20
+    inputText: {
+        padding: 5, borderWidth: 1, margin: 20
     },
-    
+
     container: {
-      flex: 1,
-      alignItems: "center", 
-      justifyContent: "center",
-      width: 200,
-      height: 100,
-      alignSelf: "center",
-      alignContent: "center"
+        flex: 1,
+        alignItems: "center",
+        justifyContent: "center",
+        width: 200,
+        height: 100,
+        alignSelf: "center",
+        alignContent: "center"
     },
-  });
+});

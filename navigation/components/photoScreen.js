@@ -4,14 +4,14 @@ import { Camera } from 'expo-camera';
 
 
 class photoScreen extends Component {
-    render(){
+    render() {
         return (
             <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
                 <Text>Upload your profile pic !</Text>
-                <Camera/>
+                <Camera />
             </View>
         );
-    } 
+    }
 }
 
 export default photoScreen;

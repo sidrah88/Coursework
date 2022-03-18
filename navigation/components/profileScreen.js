@@ -5,29 +5,29 @@ import GetPicture from './getPicture';
 
 
 class profileScreen extends Component {
-    constructor(props){
+    constructor(props) {
         super(props);
-    
+
         this.state = {
-          user: {}
+            user: {}
         };
     }
 
-    componentDidMount(){
+    componentDidMount() {
         this._unsubscribe = this.props.navigation.addListener('focus', () => {
             this.getProfile();
-        });        
+        });
     }
 
-    componentWillUnmount(){
+    componentWillUnmount() {
         this._unsubscribe();
     }
 
-      async getProfile()
-      {
+    async getProfile() {
         const id_user = await AsyncStorage.getItem('@session_id');
         const token = await AsyncStorage.getItem('@session_token');
-        console.log(id_user)
+
+        // get request sent to the API to get the profile of the given user
         return fetch("http://localhost:3333/api/1.0.0/user/" + id_user, {
             method: 'get',
             headers: {
@@ -35,52 +35,52 @@ class profileScreen extends Component {
                 'Content-Type': 'application/json'
             },
         })
-        .then((response) => {
-            if(response.status === 200){
-                return response.json()
-               
-            }else if(response.status === 400){
-                throw 'Invalid email or password';
-            }else{
-                throw 'Something went wrong';
-            }
-        })
-        .then(response => {
-            this.setState({"user": response})
-        })
-        .catch((error) => {
-            console.log(error);
-        });
+            .then((response) => {
+                if (response.status === 200) {
+                    return response.json()
+
+                } else if (response.status === 400) {
+                    throw 'Invalid email or password';
+                } else {
+                    throw 'Something went wrong';
+                }
+            })
+            .then(response => {
+                this.setState({ "user": response })
+            })
+            .catch((error) => {
+                console.log(error);
+            });
     }
 
-    render(){
+    render() {
         return (
             <View style={styles.container}>
                 <Text style={styles.titleText} >My Details</Text>
                 <Text> {this.state.user.first_name}</Text>
                 <Text> {this.state.user.email}</Text>
                 <View style={styles.buttonstyle}>
-                <Button
-                    title="Update Account"
-                    color="lightskyblue"
-                    onPress={() => this.props.navigation.navigate("Update Account")}
-                />
+                    <Button
+                        title="Update Account"
+                        color="lightskyblue"
+                        onPress={() => this.props.navigation.navigate("Update Account")}
+                    />
                 </View>
 
-            <GetPicture> </GetPicture>
-          </View>
+                <GetPicture> </GetPicture>
+            </View>
         );
-    } 
+    }
 }
 
 export default profileScreen;
 
 const styles = StyleSheet.create({
     container: {
-      flex: 1,
-      backgroundColor: '#fff',
-      alignItems: 'center',
-      justifyContent: 'center',
+        flex: 1,
+        backgroundColor: '#fff',
+        alignItems: 'center',
+        justifyContent: 'center',
     },
 
     buttonstyle: {
@@ -93,5 +93,5 @@ const styles = StyleSheet.create({
         fontWeight: "bold"
     },
 
-  });
+});
 

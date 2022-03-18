@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import { View, Text, Button, Alert, TextInput, StyleSheet, Image} from 'react-native';
+import { View, Text, Button, Alert, TextInput, StyleSheet, Image } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import image1 from './../assets/image1.png';
 
 
-class patch extends Component{
-  constructor(props){
+class patch extends Component {
+  constructor(props) {
     super(props);
 
     this.state = {
@@ -33,53 +33,51 @@ class patch extends Component{
   //   this.getProfile();
   // }
 
-  async getProfile()
-  {
+  async getProfile() {
     const id_user = await AsyncStorage.getItem('@session_id');
     const token = await AsyncStorage.getItem('@session_token');
     console.log(id_user)
     return fetch("http://localhost:3333/api/1.0.0/user/" + id_user, {
-        method: 'get',
-        headers: {
-            "X-Authorization": token,
-            'Content-Type': 'application/json'
-        },
+      method: 'get',
+      headers: {
+        "X-Authorization": token,
+        'Content-Type': 'application/json'
+      },
     })
-    .then((response) => {
-        if(response.status === 200){
-            return response.json()
-           
-        }else if(response.status === 400){
-            throw 'Invalid email or password';
-        }else{
-            throw 'Something went wrong';
-        }
-    })
-    .then(response => {
-        this.setState({"user": response})
-    })
-    .catch((error) => {
-        console.log(error);
-    });
-}
+      .then((response) => {
+        if (response.status === 200) {
+          return response.json()
 
-  async updateItem()
-  {
+        } else if (response.status === 400) {
+          throw 'Invalid email or password';
+        } else {
+          throw 'Something went wrong';
+        }
+      })
+      .then(response => {
+        this.setState({ "user": response })
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
+  async updateItem() {
     let to_send = {};
 
-    if (this.state.new_firstname != this.state.firstname){
+    if (this.state.new_firstname != this.state.firstname) {
       to_send['first_name'] = this.state.new_firstname;
     }
 
-    if (this.state.new_lastname != this.state.lastname){
+    if (this.state.new_lastname != this.state.lastname) {
       to_send['last_name'] = this.state.new_lastname;
     }
 
-    if (this.state.new_email != this.state.email){
+    if (this.state.new_email != this.state.email) {
       to_send['email'] = this.state.new_email;
     }
 
-    if (this.state.new_password != this.state.password){
+    if (this.state.new_password != this.state.password) {
       to_send['password'] = this.state.new_password;
     }
 
@@ -89,73 +87,73 @@ class patch extends Component{
     const token = await AsyncStorage.getItem('@session_token');
 
     return fetch("http://localhost:3333/api/1.0.0/user/" + id_user, {
-        method: 'PATCH',
-        headers: {
-          //'content-type': 'application/json'
-          "X-Authorization": token,
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(to_send)
+      method: 'PATCH',
+      headers: {
+        //'content-type': 'application/json'
+        "X-Authorization": token,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(to_send)
     })
-    .then((response) => {
-      console.log("Updated");
-    })
-    .catch((error) => {
-      console.log(error);
-    })
+      .then((response) => {
+        console.log("Updated");
+      })
+      .catch((error) => {
+        console.log(error);
+      })
   }
 
-  render(){
-      return (
-          <View style={styles.container}>
-            <Image source={require('./../assets/image1.png')}
-                        style={{ width: 90, height: 90 }}
-                />
+  render() {
+    return (
+      <View style={styles.container}>
+        <Image source={require('./../assets/image1.png')}
+          style={{ width: 90, height: 90 }}
+        />
 
-            <TextInput style={styles.inputBox}
-              placeholder="Enter first name..."
-              onChangeText={(new_firstname) => this.setState({new_firstname})}
-              value={this.state.new_firstname}
-            />
-            <TextInput style={styles.inputBox}
-              placeholder="Enter last name..."
-              onChangeText={(new_lastname) => this.setState({new_lastname})}
-              value={this.state.new_lastname}
-            />
-            <TextInput style={styles.inputBox}
-              placeholder="Enter email..."
-              onChangeText={(new_email) => this.setState({new_email})}
-              value={this.state.new_email}
-            />
-            <TextInput style={styles.inputBox}
-              placeholder="Enter password..."
-              onChangeText={(new_password) => this.setState({new_password})}
-              value={this.state.new_password}
-            />
-            <Button
-              title="Update"
-              color={"lightskyblue"}
-              onPress={() => this.updateItem()}
-            />
+        <TextInput style={styles.inputBox}
+          placeholder="Enter first name..."
+          onChangeText={(new_firstname) => this.setState({ new_firstname })}
+          value={this.state.new_firstname}
+        />
+        <TextInput style={styles.inputBox}
+          placeholder="Enter last name..."
+          onChangeText={(new_lastname) => this.setState({ new_lastname })}
+          value={this.state.new_lastname}
+        />
+        <TextInput style={styles.inputBox}
+          placeholder="Enter email..."
+          onChangeText={(new_email) => this.setState({ new_email })}
+          value={this.state.new_email}
+        />
+        <TextInput style={styles.inputBox}
+          placeholder="Enter password..."
+          onChangeText={(new_password) => this.setState({ new_password })}
+          value={this.state.new_password}
+        />
+        <Button
+          title="Update"
+          color={"lightskyblue"}
+          onPress={() => this.updateItem()}
+        />
 
-            
-          </View>
-      );
-    }
+
+      </View>
+    );
+  }
 }
 
 const styles = StyleSheet.create({
 
-  inputBox:{
-    padding:5, 
-    borderWidth:1, 
-    margin:5
-    
+  inputBox: {
+    padding: 5,
+    borderWidth: 1,
+    margin: 5
+
   },
 
   container: {
     flex: 1,
-    alignItems: "center", 
+    alignItems: "center",
     justifyContent: "center",
     width: 200,
     height: 100,

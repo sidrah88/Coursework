@@ -20,51 +20,50 @@ const Drawer = createDrawerNavigator();
 
 class App extends Component {
 
-  render(){
+  render() {
     return (
       <NavigationContainer>
         <Drawer.Navigator>
-       
           <Drawer.Screen name="Login" component={LoginScreen} />
           <Drawer.Screen name="Home" component={tabNavigation} />
-          <Drawer.Screen name ="Update Account" component={patch} options={{
-     drawerItemStyle: {
-       display: "none",
-     },
-   }} />       
+          <Drawer.Screen name="Update Account" component={patch} options={{
+            drawerItemStyle: {
+              display: "none",
+            },
+          }} />
           <Drawer.Screen name="CreateAccount" component={CreateAccountScreen} />
           <Drawer.Screen name="Friend Requests" component={FriendRequests} options={{
-     drawerItemStyle: {
-       display: "none",
-     },
-   }} />
+            drawerItemStyle: {
+              display: "none",
+            },
+          }} />
           <Drawer.Screen name="View Post" component={ViewPost} options={{
-     drawerItemStyle: {
-       display: "none",
-     },
-   }} />
+            drawerItemStyle: {
+              display: "none",
+            },
+          }} />
           <Drawer.Screen name="View Friend" component={ViewFriend} options={{
-     drawerItemStyle: {
-       display: "none",
-     },
-   }}/>
-             <Drawer.Screen name="My Friends" component={myFriends} options={{
-     drawerItemStyle: {
-       display: "none",
-     },
-   }} />
-   <Drawer.Screen name="Draft Post" component={draftpost} options={{
-     drawerItemStyle: {
-       display: "none",
-     },
-   }} />
+            drawerItemStyle: {
+              display: "none",
+            },
+          }} />
+          <Drawer.Screen name="My Friends" component={myFriends} options={{
+            drawerItemStyle: {
+              display: "none",
+            },
+          }} />
+          <Drawer.Screen name="Draft Post" component={draftpost} options={{
+            drawerItemStyle: {
+              display: "none",
+            },
+          }} />
 
           <Drawer.Screen name="Log Out" component={LogoutScreen} />
         </Drawer.Navigator>
       </NavigationContainer>
     );
   }
-  
+
 }
 
 export default App;

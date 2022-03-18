@@ -5,9 +5,9 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 class myFriends extends Component {
 
-    constructor(props){
+    constructor(props) {
         super(props);
-    
+
         this.state = {
             userData: [],
             user_givenname: '',
@@ -16,12 +16,11 @@ class myFriends extends Component {
         };
     }
 
-    componentDidMount(){
+    componentDidMount() {
         this.getMyFriends();
     }
 
-    async getMyFriends()
-    {
+    async getMyFriends() {
         // gets the logged in users' ID and token
         const id_user = await AsyncStorage.getItem('@session_id');
         const token = await AsyncStorage.getItem('@session_token');
@@ -34,76 +33,67 @@ class myFriends extends Component {
                 'Content-Type': 'application/json'
             },
         })
-        .then((response) => {
-            if(response.status === 200){
-                console.log("List of friends found")
-                return response.json()
-           
-            }else if(response.status === 400){
-                throw 'Invalid request';
-            }else{
-                throw 'Something went wrong';
-        }
-        })
-        .then(response => {
-            this.setState({
-                userData: response,
-                // set the ID of the user
-                id: response.user_id
+            .then((response) => {
+                if (response.status === 200) {
+                    console.log("List of friends found")
+                    return response.json()
+
+                } else if (response.status === 400) {
+                    throw 'Invalid request';
+                } else {
+                    throw 'Something went wrong';
+                }
             })
-        })
-        .catch((error) => {
-            console.log(error);
-        });
+            .then(response => {
+                this.setState({
+                    userData: response,
+                    // set the ID of the user
+                    id: response.user_id
+                })
+            })
+            .catch((error) => {
+                console.log(error);
+            });
     }
 
-    render(){
+    render() {
         return (
             <View style={styles.container}>
                 <Text style={styles.text}> My friends </Text>
                 <FlatList
                     data={this.state.userData}
-                    renderItem={({item}) => (
-                    <View>
-{/*                         <Text>{item.user_id}</Text>*/}                        
-                        <Text style={styles.text}>{item.user_givenname}</Text>
-                        <Button
-                            title="View Profile"
-                            color="lightskyblue"
-                            onPress={() => this.props.navigation.navigate("View Friend",{friendId: item.user_id})}
-                        />
-                    </View>
-                )}
-              />
+                    renderItem={({ item }) => (
+                        <View>
+                            <Text style={styles.text}>{item.user_givenname}</Text>
+                            <Button
+                                title="View Profile"
+                                color="lightskyblue"
+                                //passes the userID of the current friend as the key friend ID so it can be used on the View Friend page
+                                onPress={() => this.props.navigation.navigate("View Friend", { friendId: item.user_id })}
+                            />
+                        </View>
+                    )}
+                />
             </View>
         );
-    } 
+    }
 }
 
 export default myFriends;
 
 const styles = StyleSheet.create({
 
-    inputBox:{
-      height: 42,
-      width: 80,
-      borderBottomWidth: 1,
-      height: 90,
-      width: 200
+    text: {
+        fontSize: 18,
     },
 
-    text:{
-        fontSize: 18,
-        
-    },
-    
     container: {
-      flex: 1,
-      alignItems: "center", 
-      justifyContent: "center",
-      width: 200,
-      height: 100,
-      alignSelf: "center",
-      alignContent: "center"
+        flex: 1,
+        alignItems: "center",
+        justifyContent: "center",
+        width: 200,
+        height: 100,
+        alignSelf: "center",
+        alignContent: "center"
     },
-  });
+});

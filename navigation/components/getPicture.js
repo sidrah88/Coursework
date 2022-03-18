@@ -4,8 +4,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 
-class GetPicture extends Component{
-  constructor(props){
+class GetPicture extends Component {
+  constructor(props) {
     super(props);
 
     this.state = {
@@ -28,9 +28,9 @@ class GetPicture extends Component{
   }   */
 
   // displays the profile picture of the user
-  componentDidMount(){
+  componentDidMount() {
     this.get_profile_image();
-  } 
+  }
 
 
 
@@ -46,23 +46,23 @@ class GetPicture extends Component{
         'X-Authorization': token
       }
     })
-    .then((res) => {
-      return res.blob();
-    })
-    .then((resBlob) => {
-      let data = URL.createObjectURL(resBlob);
-      this.setState({
-        photo: data,
-        isLoading: false
+      .then((res) => {
+        return res.blob();
+      })
+      .then((resBlob) => {
+        let data = URL.createObjectURL(resBlob);
+        this.setState({
+          photo: data,
+          isLoading: false
+        });
+      })
+      .catch((err) => {
+        console.log("error", err)
       });
-    })
-    .catch((err) => {
-      console.log("error", err)
-    });
   }
 
-  render(){
-    if(!this.state.isLoading){
+  render() {
+    if (!this.state.isLoading) {
       return (
         <View style={styles.container}>
           <Image
@@ -78,16 +78,16 @@ class GetPicture extends Component{
           />
         </View>
       );
-    }else{
+    } else {
       return (
         <View>
           <Text>Loading...</Text>
         </View>
       )
     }
-    
+
   }
-  
+
 }
 
 export default GetPicture;
