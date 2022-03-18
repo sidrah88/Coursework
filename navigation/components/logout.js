@@ -33,6 +33,8 @@ class HomeScreen extends Component{
     logout = async () => {
         let token = await AsyncStorage.getItem('@session_token');
         await AsyncStorage.removeItem('@session_token');
+
+        // post request sent to the API to log the user out  
         return fetch("http://localhost:3333/api/1.0.0/logout", {
             method: 'post',
             headers: {

@@ -2,12 +2,6 @@ import React, { Component } from 'react';
 import { Text, TextInput, View, Button, StyleSheet, Alert, Image } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { ScrollView } from 'react-native-gesture-handler';
-
-//import { SafeAreaView } from "react-native";
-//import 'bootstrap/dist/css/bootstrap.min.css';
-//import ButtonGroup from "react-bootstrap/ButtonGroup";
-//import { ScrollView } from 'react-native-gesture-handler';
-
 import image1 from './../assets/image1.png';
 
 class Login extends Component {
@@ -26,6 +20,8 @@ class Login extends Component {
   }
 
   login = async () => {
+
+    // login validation 
 
     this.setState({loading:true})
     const {email, password} = this.state;
@@ -53,27 +49,9 @@ class Login extends Component {
 
     if (errorFlag) {
       console.log("errorFlag");
-      
-      /** Call Your API */
     } else {
       this.setState({ loading: false });
     }
-
-
-
-
-
-
-    /* //Validation here...
-    handleEmailInput = (email) => {
-      this.setState({email: email})
-    }
-  
-    handlePasswordInput = (pass) => {
-      this.setState({password: pass})
-    }  */
-
-    // Validation
 
     // sends a post request to the API to allow the user to login
     return fetch("http://localhost:3333/api/1.0.0/login", {
@@ -94,8 +72,10 @@ class Login extends Component {
     })
     .then(async (responseJson) => {
             console.log(responseJson);
+            // stores the ID and the token of the user
             await AsyncStorage.setItem('@session_id', responseJson.id);
             await AsyncStorage.setItem('@session_token', responseJson.token);
+            // after successful login, it navigates the user to the home page
             this.props.navigation.navigate("Home");
     })
     .catch((error) => {
@@ -103,25 +83,9 @@ class Login extends Component {
     })
   }
 
-  
-  /* handleEmailInput = {
-    email: {
-      presence: {
-        allowEmpty: false,
-        message: "Please enter an email address"
-      }
-    }
-  } */
-
   render() {
     return (
-      /* <View style={styles.container}>
-        <TextInput style={styles.inputBox} placeholder='email...' onChangeText={this.handleEmailInput} value={this.state.email} />
-        <TextInput style={styles.inputBox} placeholder='password...' onChangeText={this.handlePasswordInput} value={this.state.password} />
-      </View> */
-
       <View style={styles.container}>
-                
                 <Image source={require('./../assets/image1.png')}
                         style={{ width: 90, height: 90 }}
                 />
@@ -132,6 +96,7 @@ class Login extends Component {
                     style={{padding:5, borderWidth:1, margin:5}}
                 />
                 {
+                  // displays an error message if the email input is left blank
                   this.state.emailMessage && <Text>{"Email is required"}</Text>
                 }
                 <TextInput
@@ -142,17 +107,18 @@ class Login extends Component {
                     style={{padding:5, borderWidth:1, margin:5}}
                 />
                 {
+                  //displays an error message if the password section is left blank
                   this.state.passwordMessage && <Text>{"Password is required"}</Text>
                 }
                 <Button 
                     title="Login"
                     color="lightskyblue"
                     onPress={() => this.login()}
-                    
                 />
                 <Button
                     title="Create Account"
                     color="lightslategrey"
+                    // once clicked, navigates the user to the create account page
                     onPress={() => this.props.navigation.navigate("CreateAccount")}
                 />
         </View>

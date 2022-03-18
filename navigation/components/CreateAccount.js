@@ -1,8 +1,5 @@
 import React, { Component } from 'react';
 import { Text, TextInput, View, Button, StyleSheet, Alert, Image } from 'react-native';
-//import { SafeAreaView } from "react-native";
-//import 'bootstrap/dist/css/bootstrap.min.css';
-//import ButtonGroup from "react-bootstrap/ButtonGroup";
 import image1 from './../assets/image1.png';
 
 class CreateAccount extends Component {
@@ -25,6 +22,8 @@ class CreateAccount extends Component {
 
   signup = async () => {
 
+    //sign up validation
+
     this.setState({loading : true})
     
     const { firstname, lastname, email, password } = this.state;
@@ -33,7 +32,7 @@ class CreateAccount extends Component {
     if(firstname)
     {
       errorFlag = true;
-      this.setState({firstname:false})
+      this.setState({firstnameMessage:false})
     }
     else{
       errorFlag = false;
@@ -43,7 +42,7 @@ class CreateAccount extends Component {
     if(lastname)
     {
       errorFlag = true;
-      this.setState({lastname:false})
+      this.setState({lastnameMessage:false})
     }
     else{
       errorFlag = false;
@@ -53,7 +52,7 @@ class CreateAccount extends Component {
     if(email)
     {
       errorFlag = true;
-      this.setState({email:false})
+      this.setState({emailMessage:false})
     }
     else{
       errorFlag = false;
@@ -63,7 +62,7 @@ class CreateAccount extends Component {
     if(password)
     {
       errorFlag = true;
-      this.setState({password:false})
+      this.setState({passwordMessage:false})
     }
     else{
       errorFlag = false;
@@ -72,65 +71,9 @@ class CreateAccount extends Component {
 
     if (errorFlag) {
       console.log("errorFlag");
-      
-      /** Call Your API */
     } else {
       this.setState({ loading: false });
     }
-
-
-
-    
-
-  /*   //Validation here...
-    handleFirstNameInput = (firstname) => {
-      //do some validation
-      this.setState({firstname: firstname})
-    }
-  
-    handleLastNameInput = (lastname) => {
-      //do some validation
-      this.setState({lastname: lastname})
-    }
-  
-    handleEmailInput = (email) => {
-      //do some validation
-      this.setState({email: email})
-    }
-  
-    handlePasswordInput = (pass) => {
-      //do some validation
-      this.setState({password: pass})
-    } */
-
-    // Validation to check user input
-
-   /*  if(this.state.firstname == "")
-    {
-      alert("Enter your first name!")
-      return false;
-    }
-    else if(this.state.lastname == "")
-    {
-      alert("Enter your last name!")
-      return false;
-    }
-    else if(this.state.email == "")
-    {
-      alert("Enter your email!")
-      return false;
-    }
-    else if(this.state.password == "")
-    {
-      alert("Enter your password!")
-      return false;
-    }
-    else if(this.state.password.length < 8 ||  this.state.password.length > 20)
-    {
-      alert("Your password needs to be min 8 characters and max 20 characters")
-      return false;
-    }
- */
 
     // post request sent to the API to create a new user
     return fetch("http://localhost:3333/api/1.0.0/user", {
@@ -160,22 +103,14 @@ class CreateAccount extends Component {
 
   render() {
     return (
-      /* <View style={styles.container}>
-        <TextInput style={styles.inputBox} placeholder='first name...' onChangeText={this.handleFirstNameInput} value={this.state.firstname} />
-        <TextInput style={styles.inputBox} placeholder='last name...' onChangeText={this.handleLastNameInput} value={this.state.lastname} />
-        <TextInput style={styles.inputBox} placeholder='email...' onChangeText={this.handleEmailInput} value={this.state.email} />
-        <TextInput style={styles.inputBox} placeholder='password...' onChangeText={this.handlePasswordInput} value={this.state.password} />
-      </View> */
       <View style={styles.container}>
-
                 <Image source={require('./../assets/image1.png')}
                         style={{ width: 90, height: 90 }}
                 />
-
                 <TextInput
                     placeholder="Enter your first name..."
-                    onChangeText={(first_name) => this.setState({first_name})}
-                    value={this.state.first_name}
+                    onChangeText={(firstname) => this.setState({firstname})}
+                    value={this.state.firstname}
                     style={{padding:5, borderWidth:1, margin:5}}
                 />
                 {
@@ -183,8 +118,8 @@ class CreateAccount extends Component {
                 }
                 <TextInput
                     placeholder="Enter your last name..."
-                    onChangeText={(last_name) => this.setState({last_name})}
-                    value={this.state.last_name}
+                    onChangeText={(lastname) => this.setState({lastname})}
+                    value={this.state.lastname}
                     style={{padding:5, borderWidth:1, margin:5}}
                 />
                 {
@@ -197,6 +132,7 @@ class CreateAccount extends Component {
                     style={{padding:5, borderWidth:1, margin:5}}
                 />
                 {
+                  // displays the error message to the screen
                   this.state.emailMessage && <Text>{"Email is required"}</Text>
                 }
                 <TextInput
@@ -236,14 +172,6 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     alignContent: "center"
   },
-
-
-  button:{
-    width: 100,
-    alignContent: 'center'
-  }
-  
 });
-
 
 export default CreateAccount;

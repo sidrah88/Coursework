@@ -19,6 +19,7 @@ class draftpost extends Component {
 
     async savePost(){
 
+        // draft post validation to make sure the user does not leave the draft post blank
         this.setState({ loading: true })
         const { textInputData } = this.state;
         let errorFlag = false;
@@ -37,32 +38,34 @@ class draftpost extends Component {
                 this.setState({ loading: false });
             }
 
+        // sets the value for a key 
         AsyncStorage.setItem('My_Key', this.state.textInputData);
           
     }
 
     getPost=()=>{
  
+        // fetches an item for a key
         AsyncStorage.getItem('My_Key').then((value) => this.setState({ getValue : value }))
      
     }
 
     async deletePost()
     {
+        // removes an item for a key
         AsyncStorage.removeItem('My_Key');
     }
 
     async editpost()
     {
+        AsyncStorage.getItem('My_Key').then((value) => this.setState({ getValue : value }))
+        AsyncStorage.setItem('My_Key', this.state.textInputData);
+
 
     }
-      
-   
-    //save your drafts to permanent storage within the mobile device
-    //view draft
-    //edit draft
-    //delete draft
 
+    
+      
     //schedule date and time for when the draft is posted
 
     render(){
@@ -83,8 +86,15 @@ class draftpost extends Component {
                 <TouchableOpacity onPress={this.getPost} activeOpacity={0.7} style={styles.button} >
                     <Text style={styles.buttonText}> VIEW DRAFT </Text>
                 </TouchableOpacity>
-                <TouchableOpacity activeOpacity={0.7} style={styles.button} >
-                    <Text style={styles.buttonText}> EDIT DRAFT </Text>
+                <TextInput
+                    placeholder="Update your draft"
+                    onChangeText={ data => this.setState({textInputData : data}) }
+                    underlineColorAndroid='transparent'
+                    style={styles.TextInputStyle}
+                   
+                />
+                <TouchableOpacity onPress={this.editpost.bind(this)} activeOpacity={0.7} style={styles.button} >
+                    <Text style={styles.buttonText}> SAVE EDIT </Text>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={this.deletePost} activeOpacity={0.7} style={styles.button} >
                     <Text style={styles.buttonText}> DELETE DRAFT </Text>
@@ -114,7 +124,9 @@ const styles = StyleSheet.create({
       width: '100%',
       borderWidth: 1, 
       borderColor: 'lightslategrey',
-      borderRadius: 10
+      borderRadius: 10,
+    display: "none",
+    
     },
      
     button: {

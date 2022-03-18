@@ -20,12 +20,13 @@ class myFriends extends Component {
         this.getMyFriends();
     }
 
-
     async getMyFriends()
     {
+        // gets the logged in users' ID and token
         const id_user = await AsyncStorage.getItem('@session_id');
         const token = await AsyncStorage.getItem('@session_token');
 
+        // get request sent to the API to get all friends of a user
         return fetch("http://localhost:3333/api/1.0.0/user/" + id_user + "/friends", {
             method: 'get',
             headers: {
@@ -47,6 +48,7 @@ class myFriends extends Component {
         .then(response => {
             this.setState({
                 userData: response,
+                // set the ID of the user
                 id: response.user_id
             })
         })

@@ -18,7 +18,14 @@ class patch extends Component{
       new_email: '',
       password: '',
       new_password: '',
-      id: ''
+      id: '',
+
+      firstnameMessage: false,
+      lastnameMessage: false,
+      emailMessage: false,
+      passwordMessage: false,
+      loading: false,
+
     };
   }
 

@@ -17,12 +17,20 @@ class GetPicture extends Component{
   /* componentDidMount(){
     this._unsubscribe = this.props.navigation.addListener('focus', () => {
         this.get_profile_image();
-    });        
+    });
+    this.get_profile_image();
+
+
   }
 
-    componentWillUnmount(){
+   componentWillUnmount(){
     this._unsubscribe();
-  } */ 
+  }   */
+
+  // displays the profile picture of the user
+  componentDidMount(){
+    this.get_profile_image();
+  } 
 
 
 
@@ -51,11 +59,6 @@ class GetPicture extends Component{
     .catch((err) => {
       console.log("error", err)
     });
-  }
-
-  // calls the function 
-  componentDidMount(){
-    this.get_profile_image();
   }
 
   render(){

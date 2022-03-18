@@ -82,13 +82,11 @@ class ViewPost extends Component {
 
       async updatePost(post_id)  
         {
-
-
             this.setState({ loading: true })
-            const { text } = this.state;
+            const { newText } = this.state;
             let errorFlag = false;
 
-            if (text) {
+            if (newText) {
                 errorFlag = true;
                 this.setState({ textMessage: false });
             } else {
@@ -175,7 +173,6 @@ class ViewPost extends Component {
                             placeholder="Enter updated post..."
                             onChangeText={(newText) => this.setState({newText})}
                             value={this.state.newText}
-                            clearButtonMode='always'
                         />
                         {
                                 this.state.textMessage && <Text>{"Cannot update empty post"}</Text>

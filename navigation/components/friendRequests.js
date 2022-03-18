@@ -20,6 +20,7 @@ class FriendRequests extends Component {
         drawerLabel: () => null
     }
 
+    // loads up the friend requests of a user
     componentDidMount(){
         this.getFriendRequests();
     }

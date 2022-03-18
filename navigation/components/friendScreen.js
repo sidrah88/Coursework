@@ -39,19 +39,6 @@ class friendScreen extends Component {
         })
       }
       
-      /* async getIDfromJSON(jsonstring, name)
-      {
-        var results = [];
-        var name = "name";
-        var searchVal = "my Name";
-        for (var i=0 ; i < obj.list.length ; i++)
-        {
-            if (obj.list[i][searchField] == searchVal) {
-                results.push(obj.list[i]);
-            }
-        }
-      } */
-
      async searchFriend() {
 
         const token = await AsyncStorage.getItem('@session_token');
@@ -158,16 +145,10 @@ class friendScreen extends Component {
                             onPress={() => this.addFriend(item.user_id)}
                         />
                     </View>
-
                 )}
                 keyExtractor={(item,index) => item.user_id.toString()}
-
               />
-            </ScrollView>
-
-
-
-             
+            </ScrollView>             
             </View>
             </ScrollView>
         );
